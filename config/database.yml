@@ -26,8 +26,18 @@ development:
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
-  <<: *default
-  database: db/test.sqlite3
+  # <<: *default
+  # database: db/development.sqlite3
+  adapter: mysql2
+  encoding: utf8
+  database: lunchman_develop
+  pool: 5
+  username: dbmanager
+  password: dbmanagerpass
+  host: 127.0.0.1
+  port: 13306
+  charset: utf8
+
 
 production:
   <<: *default

@@ -13,6 +13,8 @@ class UsersController < ApplicationController
   end
 
 	def info
-
+    if current_user.nil?
+      redirect_to action: :login
+    end
 	end
 end

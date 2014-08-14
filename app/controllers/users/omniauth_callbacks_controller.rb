@@ -1,5 +1,3 @@
-# -*- encoding: UTF-8 -*-
-
 # cf) http://sourcey.com/rails-4-omniauth-using-devise-with-twitter-facebook-and-linkedin/
 # cf) http://www.ohmyenter.com/?p=668
 

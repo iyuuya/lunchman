@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
 
-	def login
+  def login
 
-	end
+  end
 
   def index
     if current_user.nil?
@@ -12,9 +12,9 @@ class UsersController < ApplicationController
     end
   end
 
-	def info
+  def info
     if current_user.nil?
       redirect_to action: :login
     end
-	end
+  end
 end

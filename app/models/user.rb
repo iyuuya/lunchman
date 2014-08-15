@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
       end
 
       # メルアドで検索
-      user = User.where(:email => email).first if email
+      user = User.where(email: email).first if email
 
 
       if user.nil?

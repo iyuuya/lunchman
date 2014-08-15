@@ -9,10 +9,10 @@
     = csrf_meta_tags
   %body
     .container
-      - if flash[:notice]
+      - if notice.present?
         .alert.alert-success
-          = flash[:notice]
-      - if flash[:alert]
+          = notice
+      - if alert.present?
         .alert.alert-success
-          = flash[:alert]
+          = alert
       = yield

@@ -4,48 +4,48 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable
 
+  def self.find_for_oauth( auth, signed_in_user = nil)
+    # authでidentityテーブルを検索、なければ登録
+    identity = Identity.find_for_oauth( auth )
 
-  def self.find_for_oauth(auth, signed_in_user = nil)
-
-    identity = Identity.find_for_oauth(auth)
-
-    # ログイン済のユーザー？
-    user = signed_in_user ? signed_in_user : identity.user
-
-    if user.nil?
-      if auth.provider == 'google_oauth2'
-        email = auth.info.email
-      else
-        # twitter、facebookの場合？
-        # http://sourcey.com/rails-4-omniauth-using-devise-with-twitter-facebook-and-linkedin/
-        email_is_verified = auth.info.email && (auth.info.verified || auth.info.verified_email)
-        email = auth.info.email if email_is_verified
-      end
-
-      # メルアドで検索
-      user = User.where(email: email).first if email
-
-
-      if user.nil?
-        #ユーザーが見つからないので、deviseユーザーテーブルに登録する
-        user = User.new(
-          name: auth.extra.raw_info.name,
-          email: email,
-          password: Devise.friendly_token[0,20]
-        )
-        # user.skip_confirmation! #確認メールは送らない
-        user.save!
-      end
+    if signed_in_user.present?
+      user = signed_in_user
+    else
+      # ユーザーを取得、なければ登録
+      user = find_or_create_user( auth )
     end
 
-    # OAuth用テーブルに保存
-    if identity.user != user
+    if identity.user.blank? || identity.user != user
       identity.user = user
       identity.save!
     end
 
     user
+  end
 
+
+  def self.find_or_create_user( auth )
+    email_from_auth = get_email_from_auth( auth )
+
+    # メルアドで検索、なければ登録
+    User.where(email: email_from_auth).first_or_create(
+        name: auth.extra.raw_info.name,
+        password: Devise.friendly_token[0,20]
+      )
+  end
+
+
+  def self.get_email_from_auth( auth )
+    if auth.provider == 'google_oauth2'
+      email = auth.info.email
+    else
+      # twitter、facebookの場合？
+      # http://sourcey.com/rails-4-omniauth-using-devise-with-twitter-facebook-and-linkedin/
+      email_is_verified = auth.info.email && (auth.info.verified || auth.info.verified_email)
+      email = auth.info.email if email_is_verified
+    end
+
+    email
   end
 
 

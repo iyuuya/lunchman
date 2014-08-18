@@ -4,12 +4,10 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def google_oauth2
 
-    ActiveRecord::Base.transaction do
-      user = User.find_for_oauth(request.env["omniauth.auth"], current_user )
+    user = User.find_for_oauth(request.env["omniauth.auth"], current_user )
 
-      flash[:notice] = "ログイン成功！"
-      sign_in_and_redirect user, event: :authentication
-    end
+    flash[:notice] = "ログイン成功！"
+    sign_in_and_redirect user, event: :authentication
 
   end
 

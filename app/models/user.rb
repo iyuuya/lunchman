@@ -5,22 +5,26 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable
 
   def self.find_for_oauth( auth, signed_in_user = nil)
-    # authでidentityテーブルを検索、なければ登録
-    identity = Identity.find_for_oauth( auth )
 
-    if signed_in_user.present?
-      user = signed_in_user
-    else
-      # ユーザーを取得、なければ登録
-      user = find_or_create_user( auth )
+    transaction do
+
+      # authでidentityテーブルを検索、なければ登録
+      identity = Identity.find_for_oauth( auth )
+
+      if signed_in_user.present?
+        user = signed_in_user
+      else
+        # ユーザーを取得、なければ登録
+        user = find_or_create_user( auth )
+      end
+
+      if identity.user.blank? || identity.user != user
+        identity.user = user
+        identity.save!
+      end
+
+      user
     end
-
-    if identity.user.blank? || identity.user != user
-      identity.user = user
-      identity.save!
-    end
-
-    user
   end
 
 

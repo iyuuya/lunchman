@@ -10,7 +10,7 @@ class UsersController < ApplicationController
 
 
   def index
-    if current_user.nil?
+    unless user_signed_in?
       redirect_to action: :login
     else
       render :info
@@ -18,7 +18,7 @@ class UsersController < ApplicationController
   end
 
   def info
-    if current_user.nil?
+    unless user_signed_in?
       redirect_to action: :login
     end
   end

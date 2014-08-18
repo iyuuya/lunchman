@@ -4,29 +4,6 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable
 
-  def self.find_for_oauth( auth, signed_in_user = nil)
-
-    transaction do
-
-      # authでidentityテーブルを検索、なければ登録
-      identity = Identity.find_for_oauth( auth )
-
-      if signed_in_user.present?
-        user = signed_in_user
-      else
-        # ユーザーを取得、なければ登録
-        user = find_or_create_user( auth )
-      end
-
-      if identity.user.blank? || identity.user != user
-        identity.user = user
-        identity.save!
-      end
-
-      user
-    end
-  end
-
 
   def self.find_or_create_user( auth )
     email_from_auth = get_email_from_auth( auth )
@@ -51,7 +28,6 @@ class User < ActiveRecord::Base
 
     email
   end
-
 
 
 end

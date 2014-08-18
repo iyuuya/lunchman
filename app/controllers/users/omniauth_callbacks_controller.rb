@@ -8,7 +8,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     auth = request.env["omniauth.auth"]
 
-    user = User.find_or_create_user( auth )
+    user = User.find_or_create_with_email( auth )
 
     # サインイン成功
     flash[:notice] = I18n.t "devise.sessions.signed_in"

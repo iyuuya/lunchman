@@ -19,9 +19,6 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     info_users_path
   end
 
-  def after_sign_out_path_for(resource)
-    login_users_path
-  end
 
   def redirect_info_page_if_logged_in
     redirect_to info_users_path if user_signed_in?

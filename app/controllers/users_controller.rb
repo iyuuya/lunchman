@@ -4,6 +4,11 @@ class UsersController < ApplicationController
 
   end
 
+  def logout
+    sign_out
+  end
+
+
   def index
     if current_user.nil?
       redirect_to action: :login

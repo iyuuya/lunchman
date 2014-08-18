@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   resources :users do
     collection do
       get "login" => "users#login", as: :login
+      get "logout" => "users#logout", as: :logout
       get "info" => "users#info"
     end
   end

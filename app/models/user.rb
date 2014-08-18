@@ -4,15 +4,21 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable
 
+  has_one :identity
 
   def self.find_or_create_user( auth )
     email_from_auth = get_email_from_auth( auth )
 
     # メルアドで検索、なければ登録
-    User.where(email: email_from_auth).first_or_create(
+    user = User.where(email: email_from_auth).first_or_create(
         name: auth.extra.raw_info.name,
         password: Devise.friendly_token[0,20]
       )
+    user.identity = Identity.find_or_create_by(uid: auth.uid, provider: auth.provider)
+    user.save!
+
+    user
+
   end
 
 

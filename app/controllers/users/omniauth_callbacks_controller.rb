@@ -2,26 +2,17 @@
 # cf) http://www.ohmyenter.com/?p=668
 
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
+  before_filter :redirect_info_page_if_logged_in
+
   def google_oauth2
 
     auth = request.env["omniauth.auth"]
 
-    if current_user.present?
-      user = current_user
-    else
-      user = User.find_or_create_user( auth )
-    end
+    user = User.find_or_create_user( auth )
 
-    identity = Identity.find_or_create_identity( auth, user )
-
-    if identity.user == user
-      # サインイン成功
-      flash[:notice] = "ログイン成功！"
-      sign_in_and_redirect user, event: :authentication
-    else
-      # サインアウト
-      sign_out_and_redirect identity.user
-    end
+    # サインイン成功
+    flash[:notice] = "ログイン成功！"
+    sign_in_and_redirect user, event: :authentication
   end
 
   def after_sign_in_path_for(resource)
@@ -30,6 +21,10 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def after_sign_out_path_for(resource)
     login_users_path
+  end
+
+  def redirect_info_page_if_logged_in
+    redirect_to info_users_path if user_signed_in?
   end
 
 end

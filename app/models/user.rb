@@ -11,15 +11,19 @@ class User < ActiveRecord::Base
 
     email_from_auth = get_email_from_auth( auth )
 
-    # メルアドで検索、なければ登録
-    user = User.where(email: email_from_auth).first_or_create(
-        name: auth.extra.raw_info.name,
-        password: Devise.friendly_token[0,20]
-      )
+    user = nil
 
-    # identityも登録
-    user.identity = Identity.find_or_create_by(uid: auth.uid, provider: auth.provider)
-    user.save!
+    transaction do
+      # メルアドで検索、なければ登録
+      user = User.where(email: email_from_auth).first_or_create(
+          name: auth.extra.raw_info.name,
+          password: Devise.friendly_token[0,20]
+        )
+
+      # identityも登録
+      user.identity = Identity.find_or_create_by(uid: auth.uid, provider: auth.provider)
+      user.save!
+    end
 
     user
   end

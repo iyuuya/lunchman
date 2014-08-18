@@ -60,7 +60,7 @@ group :development, :test do
   gem 'factory_girl_rails', '~> 4.4.1'
 
   gem 'shoulda-matchers', '~> 2.6.0'
-  gem 'capybara', '~> 2.2.1'
+  gem 'capybara'
 
   gem "better_errors"
   gem "binding_of_caller"

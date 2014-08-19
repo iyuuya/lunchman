@@ -62,6 +62,8 @@ group :development, :test do
   gem 'shoulda-matchers', '~> 2.6.0'
   gem 'capybara'
 
+  gem "faker"
+
   gem "better_errors"
   gem "binding_of_caller"
   gem "pry-rails"

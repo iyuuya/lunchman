@@ -2,14 +2,19 @@
 
 FactoryGirl.define do
   factory :event do
-    name "MyString"
-    leader_user_id ""
-    event_at "2014-08-19 12:57:49"
-    deadline_at "2014-08-19 12:57:49"
+    name Faker::Name.title
+    leader_user_id 1
+    event_at { rand(1..30).days.from_now }
+    deadline_at { event_at - rand(1..30).hours }
     comment "MyText"
-    max_paticipants ""
+    max_paticipants { rand(3..30) }
     venue_id 1
-    status 1
-    cancel_at "2014-08-19 12:57:49"
+    status 0
+    cancel_at nil
+
+    trait :as_invalid_deadline do
+        event_at { rand(1..30).days.from_now }
+        deadline_at { event_at + rand(1..30).hours }
+    end
   end
 end

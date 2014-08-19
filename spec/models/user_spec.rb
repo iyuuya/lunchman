@@ -7,6 +7,7 @@ describe User do
 
   describe "relationships" do
     it { should have_one :identity }
+    it { should have_many :event }
   end
 
   describe "find_or_create_with_email" do

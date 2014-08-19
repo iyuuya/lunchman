@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable
 
   has_one :identity
-
+  has_many :event, foreign_key: :leader_user_id
 
   def self.find_or_create_with_email( auth )
 

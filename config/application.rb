@@ -25,5 +25,8 @@ module Lunchman
     config.active_record.default_timezone = :local
 
 
+    # for Bootstrap web fonts
+    config.assets.paths << "#{Rails}/vendor/assets/fonts"
+
   end
 end

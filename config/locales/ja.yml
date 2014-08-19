@@ -1,4 +1,32 @@
 ja:
+
+
+  activerecord:
+    models:
+      event: ランチ募集
+      user: ユーザー
+    attributes:
+      event:
+        name: 企画名
+        event_at: 開催日時
+        deadline_at: 締め切り日時
+        comment: 詳細
+        max_paticipants: 最大参加人数
+
+
+  layouts:
+    event_new_top: ランチ募集作成
+    event_new_making: 作成中…
+
+    event_list_top: ランチ仲間募集中
+
+    notice:
+      create_event: ランチ募集を開始しました
+
+  errors:
+    validate:
+      deadline_at_should_be_before_event_at: '%{deadline_at}は%{event_at}よりも前に設定して下さい'
+
   date:
     abbr_day_names:
     - 日

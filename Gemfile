@@ -50,23 +50,26 @@ gem 'omniauth-google-oauth2'
 
 
 # for Develop
-group :development, :test do 
-	gem 'rspec-rails'
-	gem 'rspec-core'
-	gem 'rspec-expectations'
-	gem 'rspec-mocks'
-	gem 'rspec-support'
+group :development, :test do
+  gem 'rspec-rails'
+  gem 'rspec-core'
+  gem 'rspec-expectations'
+  gem 'rspec-mocks'
+  gem 'rspec-support'
 
-	gem 'factory_girl_rails', '~> 4.4.1'
+  gem 'factory_girl_rails', '~> 4.4.1'
 
-	gem 'shoulda-matchers', '~> 2.6.0'
-	gem 'capybara', '~> 2.2.1'
+  gem 'shoulda-matchers', '~> 2.6.0'
+  gem 'capybara'
 
-	gem "better_errors"
-	gem "binding_of_caller"
-	gem "pry-rails"
+  gem "better_errors"
+  gem "binding_of_caller"
+  gem "pry-rails"
+  gem "pry-byebug"
 
-	gem "mysql2"
+  gem "mysql2"
+
+  gem 'dotenv-rails'
 end
 
 

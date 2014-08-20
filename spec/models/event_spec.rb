@@ -2,8 +2,6 @@ require 'rails_helper'
 
 describe Event do
 
-
-
   describe "relationships" do
     it { should belong_to :leader_user }
   end
@@ -16,23 +14,20 @@ describe Event do
   end
 
   describe 'invalid date' do
+    let( :event ){ FactoryGirl.create( :event ) }
 
-    event = FactoryGirl.create( :event )
-
-    context "when event_at is before now " do
-
+    it "when event_at is before now " do
       event.event_at = Time.now - rand(1..30).days
       event.deadline_at = event.event_at + rand(1..30).hours
 
-      it { expect(event.valid?).to be_falsey }
+      expect(event).not_to be_valid
     end
 
-
-    context 'when dead_line is after event_at ' do
+    it 'when dead_line is after event_at ' do
       event.event_at = rand(1..30).days.from_now
       event.deadline_at = event.event_at + rand(1..30).hours
 
-      it { expect(event.valid?).to be_falsey }
+      expect(event).not_to be_valid
     end
   end
 end

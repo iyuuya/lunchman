@@ -7,7 +7,7 @@ class Event < ActiveRecord::Base
   validates :comment, length: { maximum: 2000}
   validates :event_at, presence: true
   validates :leader_user_id, presence: true, numericality: true
-  validates :max_paticipants,  numericality: { greater_than: 2, less_than: 200 }
+  validates :max_paticipants,  numericality: { greater_than: 1, less_than: 200 }
   validates :status, presence: true, numericality: true
 
   validate :validate_event_datetime
@@ -28,5 +28,6 @@ class Event < ActiveRecord::Base
 
     end
   end
+
 
 end

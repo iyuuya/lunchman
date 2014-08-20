@@ -1,6 +1,12 @@
 class EventsController < ApplicationController
   before_filter :redirect_login_page_unless_logged_in
 
+
+  def index
+
+  end
+
+
   def new
     @event = current_user.event.build
   end
@@ -18,7 +24,7 @@ class EventsController < ApplicationController
     @event = current_user.event.build( prms )
 
     if @event.save
-      redirect_to list_events_path, notice:  I18n.t("layouts.notice.create_event")
+      redirect_to events_path, notice:  I18n.t("layouts.notice.create_event")
     else
       @event.event_at_date = prms[:event_at_date]
       @event.event_at_time = prms[:event_at_time]

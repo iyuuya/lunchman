@@ -21,11 +21,11 @@ describe "event_create" do
       expect{
         fill_in 'event[name]',             with: event.name
 
-        fill_in 'event[event_at_date]',           with: event.event_at.strftime("%Y/%m/%d")
-        fill_in 'event[event_at_time]',           with: event.event_at.strftime("%H:%M")
+        fill_in 'event[event_at_date]',    with: event.event_at.strftime("%Y/%m/%d")
+        fill_in 'event[event_at_time]',    with: event.event_at.strftime("%H:%M")
 
-        fill_in 'event[deadline_at_date]',           with: event.event_at.strftime("%Y/%m/%d")
-        fill_in 'event[deadline_at_time]',           with: event.event_at.strftime("%H:%M")
+        fill_in 'event[deadline_at_date]', with: event.event_at.strftime("%Y/%m/%d")
+        fill_in 'event[deadline_at_time]', with: event.event_at.strftime("%H:%M")
 
         fill_in 'event[comment]',          with: event.comment
         fill_in 'event[max_paticipants]',  with: event.max_paticipants

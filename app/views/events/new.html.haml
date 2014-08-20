@@ -1,19 +1,46 @@
 .page-header
   %h1= t('layouts.event_new_top')
 
+
 = form_for(@event, class: 'form-horizontal', role: 'form') do |f|
+  - if @event.errors.any?
+    .alert.alert-danger
+      %ul
+        - @event.errors.full_messages.each do |msg|
+          %li= msg
 
   .form-group
     = f.label :name
     = f.text_field :name, class: 'form-control'
+
   .form-group
     = f.label :event_at
-    %div.bootstrap-timepicker
-      = f.datetime_select :event_at
+
+    %div.bootstraptimepicker_date
+      = f.text_field :event_at, class: 'datepicker_date', id: 'event_event_at_date', name: 'event[event_at_date]'
+      %span.add-on
+        日付を指定
+
+    %div.bootstraptimepicker_time
+      = f.text_field :event_at, class: 'datepicker_time', id: 'event_event_at_time', name: 'event[event_at_time]'
+      %span.add-on
+        時間を指定
+
+
   .form-group
     = f.label :deadline_at
-    %div.bootstrap-timepicker
-      = f.datetime_select :deadline_at
+
+    %div.bootstraptimepicker_date
+      = f.text_field :deadline_at, class: 'datepicker_date', id: 'event_deadline_at_date', name: 'event[deadline_at_date]'
+      %span.add-on
+        日付を指定
+
+    %div.bootstraptimepicker_time
+      = f.text_field :deadline_at, class: 'datepicker_time', id: 'event_deadline_at_time', name: 'event[deadline_at_time]'
+      %span.add-on
+        時間を指定
+
+
   .form-group
     = f.label :comment
     = f.text_area :comment, class: 'form-control', row: 10
@@ -24,3 +51,25 @@
   = f.submit '作成', class: 'btn btn-default', data: { disable_with: t('layouts.event_new_making') }
 
 
+  :javascript
+    $(function(){
+
+      $('.datepicker_date').attr({'data-format': 'yyyy/MM/dd' });
+      $('.datepicker_time').attr({'data-format': 'hh:mm' });
+
+      $('.bootstraptimepicker_date').datetimepicker({
+        language: 'ja',
+        pickTime: false,
+        startDate: Date.now
+      });
+
+      $('.bootstraptimepicker_time').datetimepicker({
+        language: 'ja',
+        pickDate: false,
+        pickSeconds: false,
+        startDate: Date.now
+      });
+
+
+
+    });

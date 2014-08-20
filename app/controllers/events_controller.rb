@@ -8,19 +8,31 @@ class EventsController < ApplicationController
 
 
   def create
+    build_prms = {}
+
     prms = event_params
-    prms[:status]  = Event::STATUS_NORMAL
+    build_prms[:name]  = prms[:name]
 
-    event = current_user.event.build( prms )
-    event.save!
+    build_prms[:event_at] = Date.strptime("%s %s" % [prms[:event_at_date], prms[:event_at_time]], "%Y/%m/%d %H:%M")
+    build_prms[:deadline_at] = Date.strptime("%s %s" % [prms[:deadline_at_date], prms[:deadline_at_time]], "%Y/%m/%d %H:%M")
 
-    redirect_to list_events_path, notice: I18n.t("layouts.notice.create_event")
+    build_prms[:comment]  = prms[:comment]
+    build_prms[:max_paticipants]  = prms[:max_paticipants]
+
+    build_prms[:status]  = Event::STATUS_NORMAL
+
+    @event = current_user.event.build( build_prms )
+    if @event.save
+      redirect_to list_events_path, notice:  I18n.t("layouts.notice.create_event")
+    else
+      render :new
+    end
 
   end
 
 
   private
   def event_params
-    params.require(:event).permit(:name, :event_at, :deadline_at, :comment, :max_paticipants)
+    params.require(:event).permit(:name, :event_at_date, :event_at_time, :deadline_at_date, :deadline_at_time, :comment, :max_paticipants)
   end
 end

@@ -8,20 +8,19 @@ class Event < ActiveRecord::Base
   validates :max_paticipants,  numericality: true, inclusion: { in: 2..200 }
   validates :status, presence: true, numericality: true
 
-  validate :deadline_at_should_be_before_event_at
-
+  validate :validate_event_datetime
   belongs_to :leader_user, class_name: 'User'
 
 
   private
-  def deadline_at_should_be_before_event_at
+  def validate_event_datetime
     return unless event_at && deadline_at
 
-    if deadline_at > event_at
+    if Time.now > event_at
+      errors.add(:deadline_at, :event_at_should_be_after_now )
 
-      # errors.add( I18n.t("validate_errors.deadline_at_should_be_before_event_at", { deadline_at_column_name: 'aaa', event_at_column_name: 'vvv' }).to_s )
-      #    # { deadline_at: :deadline_at, event_at: :event_at }) )
-      errors.add(:deadline_at, :deadline_at_should_be_before_event_at, event_at: :event_at )
+    elsif deadline_at > event_at
+      errors.add(:deadline_at, :deadline_at_should_be_before_event_at, event_at: Event.human_attribute_name(:event_at) )
 
     end
   end

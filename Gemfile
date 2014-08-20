@@ -48,6 +48,8 @@ gem 'devise'
 gem 'omniauth'
 gem 'omniauth-google-oauth2'
 
+# for View
+gem 'bootstrap-datetimepicker-rails'
 
 # for Develop
 group :development, :test do

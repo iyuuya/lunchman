@@ -20,6 +20,11 @@ ja:
 
     event_list_top: ランチ仲間募集中
 
+    event_new_label: 作成
+
+    date_set_label: 日付を指定
+    time_set_label: 時間を指定
+
     notice:
       create_event: ランチ募集を開始しました
 

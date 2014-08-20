@@ -2,6 +2,8 @@ require 'rails_helper'
 
 describe Event do
 
+
+
   describe "relationships" do
     it { should belong_to :leader_user }
   end
@@ -13,13 +15,24 @@ describe Event do
     it { should validate_presence_of :status }
   end
 
-  describe 'when giving invalid event_at ' do
-    subject { FactoryGirl.build(:event, :as_invalid_event_at ) }
-    it { should_not be_valid  }
-  end
+  describe 'invalid date' do
 
-  describe 'when giving invalid dead_line ' do
-    subject { FactoryGirl.build(:event, :as_invalid_deadline ) }
-    it { should_not be_valid  }
+    event = FactoryGirl.create( :event )
+
+    context "when event_at is before now " do
+
+      event.event_at = Time.now - rand(1..30).days
+      event.deadline_at = event.event_at + rand(1..30).hours
+
+      it { expect(event.valid?).to be_falsey }
+    end
+
+
+    context 'when dead_line is after event_at ' do
+      event.event_at = rand(1..30).days.from_now
+      event.deadline_at = event.event_at + rand(1..30).hours
+
+      it { expect(event.valid?).to be_falsey }
+    end
   end
 end

@@ -1,5 +1,3 @@
-# Read about factories at https://github.com/thoughtbot/factory_girl
-
 FactoryGirl.define do
   factory :event do
     name Faker::Name.title
@@ -11,15 +9,5 @@ FactoryGirl.define do
     venue_id 1
     status 0
     cancel_at nil
-
-    trait :as_invalid_event_at do
-        event_at { Time.now - rand(1..30).days }
-        deadline_at { event_at + rand(1..30).hours }
-    end
-
-    trait :as_invalid_deadline do
-        event_at { rand(1..30).days.from_now }
-        deadline_at { event_at + rand(1..30).hours }
-    end
   end
 end

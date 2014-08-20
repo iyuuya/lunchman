@@ -40,18 +40,15 @@ gem 'spring',        group: :development
 
 ####################
 
-# use haml
 gem 'haml-rails'
 
-# for Google Account Login
 gem 'devise'
 gem 'omniauth'
 gem 'omniauth-google-oauth2'
 
-# for View
+gem 'bootstrap-sass'
 gem 'bootstrap-datetimepicker-rails'
 
-# for Develop
 group :development, :test do
   gem 'rspec-rails'
   gem 'rspec-core'

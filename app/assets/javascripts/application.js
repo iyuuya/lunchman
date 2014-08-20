@@ -13,7 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
-//= require bootstrap.min
+//= require bootstrap
 //= require bootstrap-datetimepicker
 //= require locales/bootstrap-datetimepicker.ja
 //= require_tree .

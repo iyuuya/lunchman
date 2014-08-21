@@ -3,11 +3,7 @@
 
 
 = form_for(@event, class: 'form-horizontal', role: 'form') do |f|
-  - if @event.errors.any?
-    .alert.alert-danger
-      %ul
-        - @event.errors.full_messages.each do |msg|
-          %li= msg
+  = error_messages_for(@event)
 
   .form-group
     = f.label :name

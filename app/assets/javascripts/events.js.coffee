@@ -1,12 +1,13 @@
 $ ->
-  $(".datepicker_date").attr({'data-date-format':"MM月DD日"});
+  $(".datepicker_date").attr({'data-date-format':"YYYY年MM月DD日"});
+  #$(".datepicker_time").attr({'data-date-format':"hh:mm"});
 
   $(".bootstraptimepicker_date").datetimepicker
-    language: "ja"
+    #language: "ja"
     pickTime: false
 
   $(".bootstraptimepicker_time").datetimepicker
-    language: "ja"
+    language: "en"
     pickDate: false
     useSeconds: false
     minuteStepping: 15

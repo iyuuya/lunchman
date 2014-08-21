@@ -1,15 +1,15 @@
 $ ->
-  $(".datepicker_date").attr "data-format": "yyyy/MM/dd"
-  $(".datepicker_time").attr "data-format": "hh:mm"
+  $(".datepicker_date").attr({'data-date-format':"MM月DD日"});
+
   $(".bootstraptimepicker_date").datetimepicker
     language: "ja"
     pickTime: false
-    startDate: Date.now
 
   $(".bootstraptimepicker_time").datetimepicker
     language: "ja"
     pickDate: false
-    pickSeconds: false
-    startDate: Date.now
+    useSeconds: false
+    minuteStepping: 15
+    defaultDate: '13:00'
 
   return

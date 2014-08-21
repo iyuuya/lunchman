@@ -15,29 +15,29 @@
 
   .form-group
     = f.label :event_at
+    .bootstraptimepicker_date.input-group.date
+      = f.text_field :event_at_date, class: 'form-control datepicker_date', id: 'event_event_at_date', name: 'event[event_at_date]'
+      %span.input-group-addon
+        %span.glyphicon.glyphicon-calendar
 
-    .bootstraptimepicker_date
-      = f.text_field :event_at_date, class: 'datepicker_date', id: 'event_event_at_date', name: 'event[event_at_date]'
-      %span.add-on
-        = t('layouts.date_set_label')
 
-    .bootstraptimepicker_time
-      = f.text_field :event_at_time, class: 'datepicker_time', id: 'event_event_at_time', name: 'event[event_at_time]'
-      %span.add-on
-        = t('layouts.time_set_label')
+    .bootstraptimepicker_time.input-group.date
+      = f.text_field :event_at_time, class: 'form-control datepicker_time', id: 'event_event_at_time', name: 'event[event_at_time]'
+      %span.input-group-addon
+        %span.glyphicon.glyphicon-time
 
   .form-group
     = f.label :deadline_at
 
-    .bootstraptimepicker_date
-      = f.text_field :deadline_at_date, class: 'datepicker_date', id: 'event_deadline_at_date', name: 'event[deadline_at_date]'
-      %span.add-on
-        = t('layouts.date_set_label')
+    .bootstraptimepicker_date.input-group.date
+      = f.text_field :deadline_at_date, class: 'form-control datepicker_date', id: 'event_deadline_at_date', name: 'event[deadline_at_date]'
+      %span.input-group-addon
+        %span.glyphicon.glyphicon-calendar
 
-    .bootstraptimepicker_time
-      = f.text_field :deadline_at_time, class: 'datepicker_time', id: 'event_deadline_at_time', name: 'event[deadline_at_time]'
-      %span.add-on
-        = t('layouts.time_set_label')
+    .bootstraptimepicker_time.input-group.date
+      = f.text_field :deadline_at_time, class: 'form-control datepicker_time', id: 'event_deadline_at_time', name: 'event[deadline_at_time]'
+      %span.input-group-addon
+        %span.glyphicon.glyphicon-time
 
   .form-group
     = f.label :comment

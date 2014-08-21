@@ -2,8 +2,8 @@ require 'rails_helper'
 
 describe "event_create" do
 
-  describe "fill_in form" do
-    include_context "fill_in_event_new_form", is_click_button: false
+  context "fill_in form" do
+    include_context "login_and_fillin_form"
 
     it 'increse event count' do
       expect{ click_button I18n.t('layouts.event_new_label') }.to change( Event, :count ).by(1)
@@ -12,13 +12,12 @@ describe "event_create" do
   end
 
 
-  describe "fill_in form" do
-    include_context "fill_in_event_new_form", is_click_button: true
+  context "fill_in form" do
+    include_context "login_and_fillin_form"
 
-    # before do
-    #   visit new_event_path
-    #   click_button I18n.t('layouts.event_new_label')
-    # end
+    before do
+      click_button I18n.t('layouts.event_new_label')
+    end
 
     it 'redirect to events#index 'do
       expect( page.current_path ).to eq events_path

@@ -1,6 +1,4 @@
-shared_context "fill_in_event_new_form" do |options={}|
-  is_click_button = options[:is_click_button]
-
+shared_context "login_and_fillin_form" do
   let(:event) { FactoryGirl.build(:event) }
 
   service  = :google_oauth2
@@ -22,8 +20,5 @@ shared_context "fill_in_event_new_form" do |options={}|
     fill_in 'event[comment]',          with: event.comment
     fill_in 'event[max_paticipants]',  with: event.max_paticipants
 
-    click_button I18n.t('layouts.event_new_label') if is_click_button
-
   end
-
 end

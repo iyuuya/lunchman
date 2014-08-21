@@ -14,22 +14,22 @@ class EventsController < ApplicationController
 
 
   def create
-    prms = event_params
+    build_params = event_params
 
-    prms[:event_at] = Date.strptime("%s %s" % [prms[:event_at_date], prms[:event_at_time]], "%Y/%m/%d %H:%M")
-    prms[:deadline_at] = Date.strptime("%s %s" % [prms[:deadline_at_date], prms[:deadline_at_time]], "%Y/%m/%d %H:%M")
+    build_params[:event_at] = Date.strptime("%s %s" % [build_params[:event_at_date], build_params[:event_at_time]], "%Y/%m/%d %H:%M")
+    build_params[:deadline_at] = Date.strptime("%s %s" % [build_params[:deadline_at_date], build_params[:deadline_at_time]], "%Y/%m/%d %H:%M")
 
-    prms[:status]  = Event::STATUS_NORMAL
+    build_params[:status]  = Event::STATUS_NORMAL
 
-    @event = current_user.event.build( prms )
+    @event = current_user.event.build( build_params )
 
     if @event.save
       redirect_to events_path, notice:  I18n.t("layouts.notice.create_event")
     else
-      @event.event_at_date = prms[:event_at_date]
-      @event.event_at_time = prms[:event_at_time]
-      @event.deadline_at_date = prms[:deadline_at_date]
-      @event.deadline_at_time = prms[:deadline_at_time]
+      @event.event_at_date = build_params[:event_at_date]
+      @event.event_at_time = build_params[:event_at_time]
+      @event.deadline_at_date = build_params[:deadline_at_date]
+      @event.deadline_at_time = build_params[:deadline_at_time]
 
       render :new
     end

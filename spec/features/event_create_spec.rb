@@ -1,41 +1,32 @@
 require 'rails_helper'
 
-# cf http://easyramble.com/request-spec-for-devise-omniatuh.html
 describe "event_create" do
 
-  describe "login with google oauth" do
-    let!(:event) { FactoryGirl.create(:event) }
-
-    service  = :google_oauth2
-    include_context "setup_OmniAuth_config", service
-
-    before do
-      # login
-      visit "/users/auth/google_oauth2"
-
-      # visit event create form
-      visit "/events/new"
-    end
+  describe "fill_in form" do
+    include_context "fill_in_event_new_form", is_click_button: false
 
     it 'increse event count' do
-      expect{
-        fill_in 'event[name]',             with: event.name
-
-        fill_in 'event[event_at_date]',    with: event.event_at.strftime("%Y/%m/%d")
-        fill_in 'event[event_at_time]',    with: event.event_at.strftime("%H:%M")
-
-        fill_in 'event[deadline_at_date]', with: event.event_at.strftime("%Y/%m/%d")
-        fill_in 'event[deadline_at_time]', with: event.event_at.strftime("%H:%M")
-
-        fill_in 'event[comment]',          with: event.comment
-        fill_in 'event[max_paticipants]',  with: event.max_paticipants
-
-        click_button '作成'
-
-        }.to change( Event, :count ).by(1)
+      expect{ click_button I18n.t('layouts.event_new_label') }.to change( Event, :count ).by(1)
     end
-
 
   end
 
+
+  describe "fill_in form" do
+    include_context "fill_in_event_new_form", is_click_button: true
+
+    # before do
+    #   visit new_event_path
+    #   click_button I18n.t('layouts.event_new_label')
+    # end
+
+    it 'redirect to events#index 'do
+      expect( page.current_path ).to eq events_path
+    end
+
+    it 'no error classes in css' do
+      expect( page ).not_to have_css('div.alert-danger')
+    end
+
+  end
 end

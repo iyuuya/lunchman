@@ -1,7 +1,7 @@
 .page-header
   %h1= t('layouts.event_new_top')
 
-= form_for(@event, class: 'form-horizontal', role: 'form') do |f|
+= form_for(@event, class: 'form-horizontal', role: 'form', builder: ApplicationFormBuilder ) do |f|
   = error_messages_for(@event)
 
   .form-group
@@ -11,12 +11,12 @@
   .form-group
     = f.label :event_at
     .bootstraptimepicker_date.input-group.date
-      = f.text_field :event_at_date, class: 'form-control datepicker_date', id: 'event_event_at_date', name: 'event[event_at_date]'
+      = f.datepicker_date :event_at
       %span.input-group-addon
         %span.glyphicon.glyphicon-calendar
 
     .bootstraptimepicker_time.input-group.date
-      = f.text_field :event_at_time, class: 'form-control datepicker_time', id: 'event_event_at_time', name: 'event[event_at_time]'
+      = f.datepicker_time :event_at
       %span.input-group-addon
         %span.glyphicon.glyphicon-time
 
@@ -24,12 +24,12 @@
     = f.label :deadline_at
 
     .bootstraptimepicker_date.input-group.date
-      = f.text_field :deadline_at_date, class: 'form-control datepicker_date', id: 'event_deadline_at_date', name: 'event[deadline_at_date]'
+      = f.datepicker_date :deadline_at
       %span.input-group-addon
         %span.glyphicon.glyphicon-calendar
 
     .bootstraptimepicker_time.input-group.date
-      = f.text_field :deadline_at_time, class: 'form-control datepicker_time', id: 'event_deadline_at_time', name: 'event[deadline_at_time]'
+      = f.datepicker_time :deadline_at
       %span.input-group-addon
         %span.glyphicon.glyphicon-time
 

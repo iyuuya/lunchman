@@ -25,6 +25,5 @@ module Lunchman
     config.active_record.default_timezone = :local
 
     config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif)
-
   end
 end

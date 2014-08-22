@@ -21,5 +21,4 @@ describe "Googleのアカウントを使いOmniauthでログインする" do
     end
 
   end
-
 end

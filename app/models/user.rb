@@ -8,7 +8,6 @@ class User < ActiveRecord::Base
   has_many :event, foreign_key: :leader_user_id
 
   def self.find_or_create_with_email( auth )
-
     email_from_auth = get_email_from_auth( auth )
 
     user = nil
@@ -28,7 +27,6 @@ class User < ActiveRecord::Base
     user
   end
 
-
   def self.get_email_from_auth( auth )
     if auth.provider == 'google_oauth2'
       email = auth.info.email
@@ -41,6 +39,4 @@ class User < ActiveRecord::Base
 
     email
   end
-
-
 end

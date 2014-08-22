@@ -1,6 +1,4 @@
 ja:
-
-
   activerecord:
     models:
       event: ランチ募集
@@ -12,7 +10,6 @@ ja:
         deadline_at: 締め切り日時
         comment: 詳細
         max_paticipants: 最大参加人数
-
 
   layouts:
     event_index_top: ランチ仲間募集！
@@ -26,6 +23,8 @@ ja:
 
     date_set_label: 日付を指定
     time_set_label: 時間を指定
+
+    logout: 正常にログアウトしました
 
     notice:
       create_event: ランチ募集を開始しました
@@ -98,10 +97,8 @@ ja:
       less_than_or_equal_to: は%{count}以下の値にしてください。
       inclusion: は一覧にありません。
 
-
     template:
       body: 次の項目を確認してください。
       header:
         one: ! '%{model}にエラーが発生しました。'
         other: ! '%{model}に%{count}個のエラーが発生しました。'
-

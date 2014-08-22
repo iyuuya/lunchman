@@ -12,9 +12,11 @@ ja:
         max_paticipants: 最大参加人数
 
   layouts:
+    link_to_event_new_top: ランチ仲間を募集作成する
+
     event_index_top: ランチ仲間募集！
 
-    event_new_top: ランチ募集作成
+    event_new_top: ランチ仲間募集
     event_new_making: 作成中…
 
     event_list_top: ランチ仲間募集中

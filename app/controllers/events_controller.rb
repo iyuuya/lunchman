@@ -20,7 +20,7 @@ class EventsController < ApplicationController
           "%s %s" % [ format_date_string( build_params[:deadline_at_date]), build_params[:deadline_at_time]],
           "%Y/%m/%d %H:%M %p")
 
-    build_params[:status]  = Event::STATUS_NORMAL
+    build_params[:status]  = Event.statuses[:normal]
 
     @event = current_user.event.build( build_params )
 
@@ -35,7 +35,6 @@ class EventsController < ApplicationController
       render :new
     end
   end
-
 
   private
   def format_date_string( date_string )

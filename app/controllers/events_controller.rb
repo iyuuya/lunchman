@@ -12,11 +12,11 @@ class EventsController < ApplicationController
   def create
     build_params = event_params
 
-    build_params[:event_at] = Date.strptime(
+    build_params[:event_at] = Time.strptime(
           "%s %s" % [ format_date_string( build_params[:event_at_date]),  build_params[:event_at_time]],
           "%Y/%m/%d %H:%M %p")
 
-    build_params[:deadline_at] = Date.strptime(
+    build_params[:deadline_at] = Time.strptime(
           "%s %s" % [ format_date_string( build_params[:deadline_at_date]), build_params[:deadline_at_time]],
           "%Y/%m/%d %H:%M %p")
 

@@ -11,17 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140819035749) do
+ActiveRecord::Schema.define(version: 20140822033615) do
 
   create_table "events", force: true do |t|
-    t.string   "name"
-    t.integer  "leader_user_id"
-    t.datetime "event_at"
+    t.string   "name",            null: false
+    t.integer  "leader_user_id",  null: false
+    t.datetime "event_at",        null: false
     t.datetime "deadline_at"
     t.text     "comment"
     t.integer  "max_paticipants"
     t.integer  "venue_id"
-    t.integer  "status"
+    t.integer  "status",          null: false
     t.datetime "cancel_at"
     t.datetime "created_at"
     t.datetime "updated_at"

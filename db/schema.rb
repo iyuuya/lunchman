@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140822033615) do
+ActiveRecord::Schema.define(version: 20140822074823) do
 
   create_table "events", force: true do |t|
     t.string   "name",            null: false
@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 20140822033615) do
     t.datetime "event_at",        null: false
     t.datetime "deadline_at"
     t.text     "comment"
-    t.integer  "max_paticipants"
+    t.integer  "max_paticipants", null: false
     t.integer  "venue_id"
     t.integer  "status",          null: false
     t.datetime "cancel_at"

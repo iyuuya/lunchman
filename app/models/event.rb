@@ -1,5 +1,6 @@
 class Event < ActiveRecord::Base
   attr_accessor :event_at_date, :event_at_time, :deadline_at_date, :deadline_at_time
+  after_initialize :set_default_value_if_nil
 
   enum status: { normal: 0, cancel: 1}
 
@@ -7,7 +8,7 @@ class Event < ActiveRecord::Base
   validates :comment, length: { maximum: 2000}
   validates :event_at, presence: true
   validates :leader_user_id, presence: true, numericality: true
-  validates :max_paticipants,  numericality: { greater_than: 1, less_than: 200 }
+  validates :max_paticipants, presence: true,  numericality: { greater_than: 1, less_than: 200 }
   validates :status, presence: true
 
   validate :validate_event_datetime
@@ -24,5 +25,9 @@ class Event < ActiveRecord::Base
     if deadline_at > event_at
       errors.add(:deadline_at, :deadline_at_should_be_before_event_at, event_at: Event.human_attribute_name(:event_at) )
     end
+  end
+
+  def set_default_value_if_nil
+    self.max_paticipants = 10 if self.max_paticipants.nil?
   end
 end

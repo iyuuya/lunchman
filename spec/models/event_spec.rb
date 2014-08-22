@@ -11,6 +11,7 @@ describe Event do
     it { should validate_presence_of :event_at }
     it { should validate_presence_of :leader_user_id }
     it { should validate_presence_of :status }
+    it { should validate_presence_of :max_paticipants }
   end
 
   describe 'invalid date' do

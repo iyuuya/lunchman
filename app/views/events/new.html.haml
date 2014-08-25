@@ -1,0 +1,44 @@
+.page-header
+  %h1= t('layouts.event_new_top')
+
+= form_for(@event, class: 'form-horizontal', role: 'form', builder: ApplicationFormBuilder ) do |f|
+  = error_messages_for(@event)
+
+  .form-group
+    = f.label :name
+    = f.text_field :name, class: 'form-control'
+
+  .form-group
+    = f.label :event_at
+    .bootstraptimepicker_date.input-group.date
+      = f.datepicker_date :event_at
+      %span.input-group-addon
+        %span.glyphicon.glyphicon-calendar
+
+    .bootstraptimepicker_time.input-group.date
+      = f.datepicker_time :event_at
+      %span.input-group-addon
+        %span.glyphicon.glyphicon-time
+
+  .form-group
+    = f.label :deadline_at
+
+    .bootstraptimepicker_date.input-group.date
+      = f.datepicker_date :deadline_at
+      %span.input-group-addon
+        %span.glyphicon.glyphicon-calendar
+
+    .bootstraptimepicker_time.input-group.date
+      = f.datepicker_time :deadline_at
+      %span.input-group-addon
+        %span.glyphicon.glyphicon-time
+
+  .form-group
+    = f.label :comment
+    = f.text_area :comment, class: 'form-control', row: 10
+
+  .form-group
+    = f.label :max_paticipants
+    = f.text_field :max_paticipants, class: 'form-control', maxlength: 3
+
+  = f.submit t('layouts.event_new_label'), class: 'btn btn-default', data: { disable_with: t('layouts.event_new_making') }

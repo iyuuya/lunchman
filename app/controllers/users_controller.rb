@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-
   def login
 
   end
@@ -7,7 +6,6 @@ class UsersController < ApplicationController
   def logout
     sign_out
   end
-
 
   def index
     unless user_signed_in?

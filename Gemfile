@@ -40,16 +40,16 @@ gem 'spring',        group: :development
 
 ####################
 
-# use haml
 gem 'haml-rails'
 
-# for Google Account Login
 gem 'devise'
 gem 'omniauth'
 gem 'omniauth-google-oauth2'
 
+gem 'bootstrap-sass'
+gem 'momentjs-rails', '>= 2.8.1'
+gem 'bootstrap3-datetimepicker-rails', '~> 3.1.1'
 
-# for Develop
 group :development, :test do
   gem 'rspec-rails'
   gem 'rspec-core'
@@ -61,6 +61,8 @@ group :development, :test do
 
   gem 'shoulda-matchers', '~> 2.6.0'
   gem 'capybara'
+
+  gem "faker"
 
   gem "better_errors"
   gem "binding_of_caller"

@@ -2,7 +2,7 @@ language: ruby
 rvm:
   - "2.1.2"
 env:
-  - DB=mysql
+  - DB=sqlite
 gemfile:
   - Gemfile
 bundler_args: --without development

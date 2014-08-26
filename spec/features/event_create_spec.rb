@@ -21,13 +21,13 @@ describe "event_create", :js => true do
     fill_in 'event[max_paticipants]',  with: event.max_paticipants
   end
 
-  context "fillin form" do
+  describe "fillin form" do
     it 'click and increse event count' do
       expect{ click_button I18n.t('layouts.event_new_label'); sleep 3 }.to change( Event, :count ).from(0).to(1)
     end
   end
 
-  context "fillin form and click" do
+  describe "fillin form and click" do
     before do
       click_button I18n.t('layouts.event_new_label')
     end

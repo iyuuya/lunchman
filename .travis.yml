@@ -1,0 +1,9 @@
+language: ruby
+rvm:
+  - "2.1.2"
+script:
+  - bundle exec rake routes
+  - rails generate devise:install
+  - rails generate devise user
+  - rake db:migrate RAILS_ENV=test
+  - bundle exec rspec

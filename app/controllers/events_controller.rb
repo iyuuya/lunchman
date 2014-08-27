@@ -2,7 +2,7 @@ class EventsController < ApplicationController
   before_action :redirect_login_page_unless_logged_in, except: :show
 
   def index
-
+    @event = Event.all
   end
 
   def show

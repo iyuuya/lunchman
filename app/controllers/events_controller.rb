@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-  before_filter :redirect_login_page_unless_logged_in
+  before_filter :redirect_login_page_unless_logged_in, except: :show
 
   def index
 

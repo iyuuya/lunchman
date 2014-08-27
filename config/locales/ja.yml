@@ -37,6 +37,11 @@ ja:
     notice:
       create_event: ランチ募集を開始しました
 
+  time:
+    formats:
+      long: '%Y年%m月%d日 %H:%M %p'
+      short: '%H:%M %p'
+
   date:
     abbr_day_names:
     - 日
@@ -70,7 +75,7 @@ ja:
     - 土曜日
     formats:
       default: ! '%Y/%m/%d'
-      long: ! '%Y年%m月%d日(%a)'
+      long: ! '%Y年%m月%d日'
       short: ! '%m/%d'
     month_names:
     -

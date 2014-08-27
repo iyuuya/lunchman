@@ -13,12 +13,12 @@ describe "event_create", :js => true do
     page.execute_script( %Q{ $('.bootstraptimepicker_date').removeAttr('readonly') } );
     page.execute_script( %Q{ $('.bootstraptimepicker_time').removeAttr('readonly') } );
 
-    fill_in 'event[name]',             with: event.name
-    fill_in 'event[comment]',          with: event.comment
-    fill_in 'event[event_at_date]',    with: event.event_at.strftime("%Y年%m月%d日")
-    fill_in 'event[event_at_time]',    with: event.event_at.strftime("%H:%M %p")
-    fill_in 'event[deadline_at_date]', with: event.event_at.strftime("%Y年%m月%d日")
-    fill_in 'event[deadline_at_time]', with: event.event_at.strftime("%H:%M %p")
+    fill_in 'event[name]',              with: event.name
+    fill_in 'event[comment]',           with: event.comment
+    fill_in 'event[event_at_date]',     with: event.event_at.strftime(I18n.t('date.formats.long'))
+    fill_in 'event[event_at_time]',     with: event.event_at.strftime(I18n.t('time.formats.short'))
+    fill_in 'event[deadline_at_date]',  with: event.event_at.strftime(I18n.t('date.formats.long'))
+    fill_in 'event[deadline_at_time]',  with: event.event_at.strftime(I18n.t('time.formats.short'))
     fill_in 'event[max_participants]',  with: event.max_participants
   end
 

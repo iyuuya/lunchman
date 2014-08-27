@@ -10,23 +10,29 @@ ja:
         deadline_at: 締め切り日時
         comment: 詳細
         max_paticipants: 最大参加人数
+        status: 募集状況
 
   layouts:
     link_to_event_new_top: ランチ仲間を募集作成する
 
     event_index_top: ランチ仲間募集！
-
     event_new_top: ランチ仲間募集
+    event_show_top: ランチ仲間募集中！
+    event_list_top: ランチ仲間募集中 一覧
+
     event_new_making: 作成中…
-
-    event_list_top: ランチ仲間募集中
-
     event_new_label: 作成
+    event_leader_name: 企画者名
+
+    event_status_participable: 参加ＯＫ
+    event_status_not_participable: 参加不可
 
     date_set_label: 日付を指定
     time_set_label: 時間を指定
 
     logout: 正常にログアウトしました
+    not_setting: 設定されていません
+    paticipant_unit: 人
 
     notice:
       create_event: ランチ募集を開始しました

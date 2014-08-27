@@ -43,4 +43,5 @@
       .panel-heading
         = t('activerecord.attributes.event.max_paticipants')
       .panel-body
-        = max_paticipants( @event )
+        = @event.max_paticipants
+        = t('layouts.paticipant_unit')

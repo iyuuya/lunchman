@@ -10,12 +10,4 @@ module EventsHelper
       I18n.t('layouts.not_setting')
     end
   end
-
-  def max_paticipants(event)
-    if event.max_paticipants.present?
-      '%s %s' % [event.max_paticipants, I18n.t('layouts.paticipant_unit')]
-    else
-      I18n.t('layouts.not_setting')
-    end
-  end
 end

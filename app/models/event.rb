@@ -14,6 +14,12 @@ class Event < ActiveRecord::Base
 
   belongs_to :leader_user, class_name: 'User'
 
+  scope :participatable, lambda {
+    where('status = :status', { status: Event.statuses[:normal] })
+    .where('event_at > :now', { now: Time.now })
+    .where('deadline_at is null OR deadline_at > :now', { now: Time.now })
+  }
+
   def participatable?
     normal? && event_at.future? && (deadline_at.blank? || deadline_at.future?)
   end

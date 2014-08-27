@@ -9,5 +9,11 @@ FactoryGirl.define do
     venue_id            { 1 }
     status              { 0 }
     cancel_at           { nil }
+
+    factory :event_without_validate do
+      to_create do |instance|
+        instance.save validate: false
+      end
+    end
   end
 end

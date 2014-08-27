@@ -1,5 +1,5 @@
 class AddIdentityIdToUser < ActiveRecord::Migration
   def change
-    add_column(:users, :identity_id, :indeger)
+    add_column(:users, :identity_id, :integer)
   end
 end

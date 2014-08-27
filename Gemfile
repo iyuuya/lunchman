@@ -61,6 +61,9 @@ group :development, :test do
 
   gem 'shoulda-matchers', '~> 2.6.0'
   gem 'capybara'
+  gem 'capybara-webkit'
+  gem 'poltergeist'
+  gem 'database_cleaner'
 
   gem "faker"
 

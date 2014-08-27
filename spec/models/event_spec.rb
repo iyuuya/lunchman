@@ -10,7 +10,7 @@ describe Event do
     it { should validate_presence_of :event_at }
     it { should validate_presence_of :leader_user_id }
     it { should validate_presence_of :status }
-    it { should validate_presence_of :max_paticipants }
+    it { should validate_presence_of :max_participants }
   end
 
   describe '#validate_event_datetime' do
@@ -31,9 +31,9 @@ describe Event do
     end
   end
 
-  describe '#participable?' do
+  describe '#participatable?' do
     let!(:event) { FactoryGirl.create(:event) }
-    subject { event.participable? }
+    subject { event.participatable? }
 
     it 'when valid event, should be true' do
       should be_truthy

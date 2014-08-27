@@ -1,6 +1,6 @@
 module EventsHelper
-  def status_participable(event)
-    event.participable? ? I18n.t('layouts.event_status_participable') : I18n.t('layouts.event_status_not_participable')
+  def status_participatable(event)
+    event.participatable? ? I18n.t('layouts.event_status_participatable') : I18n.t('layouts.event_status_not_participatable')
   end
 
   def deadline_at(event)

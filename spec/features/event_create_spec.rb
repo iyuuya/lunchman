@@ -1,3 +1,4 @@
+
 require 'rails_helper'
 
 describe "event_create", :js => true do
@@ -18,7 +19,7 @@ describe "event_create", :js => true do
     fill_in 'event[event_at_time]',    with: event.event_at.strftime("%H:%M %p")
     fill_in 'event[deadline_at_date]', with: event.event_at.strftime("%Y年%m月%d日")
     fill_in 'event[deadline_at_time]', with: event.event_at.strftime("%H:%M %p")
-    fill_in 'event[max_paticipants]',  with: event.max_paticipants
+    fill_in 'event[max_participants]',  with: event.max_participants
   end
 
   describe "fillin form" do

@@ -7,7 +7,7 @@
       .panel-heading
         = t('activerecord.attributes.event.status')
       .panel-body
-        = status_participable( @event )
+        = status_participatable( @event )
 
     .panel.panel-default
       .panel-heading
@@ -41,7 +41,7 @@
 
     .panel.panel-default
       .panel-heading
-        = t('activerecord.attributes.event.max_paticipants')
+        = t('activerecord.attributes.event.max_participants')
       .panel-body
-        = @event.max_paticipants
-        = t('layouts.paticipant_unit')
+        = @event.max_participants
+        = t('layouts.participant_unit')

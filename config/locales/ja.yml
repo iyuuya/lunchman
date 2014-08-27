@@ -9,7 +9,7 @@ ja:
         event_at: 開催日時
         deadline_at: 締め切り日時
         comment: 詳細
-        max_paticipants: 最大参加人数
+        max_participants: 最大参加人数
         status: 募集状況
 
   layouts:
@@ -24,15 +24,15 @@ ja:
     event_new_label: 作成
     event_leader_name: 企画者名
 
-    event_status_participable: 参加ＯＫ
-    event_status_not_participable: 参加不可
+    event_status_participatable: 参加ＯＫ
+    event_status_not_participatable: 参加不可
 
     date_set_label: 日付を指定
     time_set_label: 時間を指定
 
     logout: 正常にログアウトしました
     not_setting: 設定されていません
-    paticipant_unit: 人
+    participant_unit: 人
 
     notice:
       create_event: ランチ募集を開始しました

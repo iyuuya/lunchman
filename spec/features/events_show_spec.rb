@@ -40,7 +40,7 @@ describe 'event_show' do
       end
 
       it 'should have content layouts.not_setting' do
-        expect(page).to have_content I18n.t('layouts.event_status_not_participable')
+        expect(page).to have_content I18n.t('layouts.event_status_not_participatable')
       end
     end
   end

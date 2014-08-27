@@ -15,11 +15,7 @@ class Event < ActiveRecord::Base
   belongs_to :leader_user, class_name: 'User'
 
   def participable?
-    if normal? && event_at > Time.now && (deadline_at.blank? || (deadline_at.present? && deadline_at > Time.now))
-      true
-    else
-      false
-    end
+    normal? && event_at > Time.now && (deadline_at.blank? || (deadline_at.present? && deadline_at > Time.now))
   end
 
   private

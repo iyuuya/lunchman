@@ -14,6 +14,7 @@ ja:
 
   layouts:
     link_to_event_new_top: ランチ仲間を募集作成する
+    link_to_event_list: 募集の一覧を表示する
 
     event_index_top: ランチ仲間募集！
     event_new_top: ランチ仲間募集

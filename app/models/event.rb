@@ -15,7 +15,7 @@ class Event < ActiveRecord::Base
   belongs_to :leader_user, class_name: 'User'
 
   def participatable?
-    normal? && event_at > Time.now && (deadline_at.blank? || (deadline_at.present? && deadline_at > Time.now))
+    normal? && event_at.future? && (deadline_at.blank? || (deadline_at.present? && deadline_at.future?))
   end
 
   private
@@ -23,7 +23,7 @@ class Event < ActiveRecord::Base
   def validate_event_datetime
     return unless event_at && deadline_at
 
-    if Time.now > event_at
+    if event_at.past?
       errors.add(:event_at, :event_at_should_be_after_now)
     end
 

@@ -10,7 +10,7 @@ class Event < ActiveRecord::Base
   validates :leader_user_id, presence: true, numericality: true
   validates :max_participants, presence: true,  numericality: { greater_than: 1, less_than: 200 }
   validates :status, presence: true
-  validate :validate_event_datetime
+  validates_with Validators::EventDateValidator
 
   belongs_to :leader_user, class_name: 'User'
 
@@ -19,18 +19,6 @@ class Event < ActiveRecord::Base
   end
 
   private
-
-  def validate_event_datetime
-    return unless event_at && deadline_at
-
-    if event_at.past?
-      errors.add(:event_at, :event_at_should_be_after_now)
-    end
-
-    if deadline_at > event_at
-      errors.add(:deadline_at, :deadline_at_should_be_before_event_at, event_at: Event.human_attribute_name(:event_at))
-    end
-  end
 
   def set_default_value_if_nil
     self.max_participants = 10 if self.max_participants.nil?

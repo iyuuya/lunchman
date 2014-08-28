@@ -101,6 +101,7 @@ ja:
     format: ! '%{attribute}%{message}'
     messages:
       event_at_should_be_after_now: は現在時間よりも後に設定して下さい
+      deadline_at_should_be_after_now: は現在時間よりも後に設定して下さい
       deadline_at_should_be_before_event_at: は%{event_at}よりも前に設定して下さい
 
       record_invalid: バリデーションに失敗しました。 %{errors}

@@ -32,31 +32,31 @@ describe Event do
   end
 
   describe '#participatable?' do
-    let!(:event) { FactoryGirl.create(:event) }
     subject { event.participatable? }
 
-    it 'when valid event, should be true' do
-      should be_truthy
+    context 'when valid event' do
+      let!(:event) { FactoryGirl.build(:event) }
+      it { is_expected.to be_truthy }
     end
 
-    it 'when status is cancel, should be false' do
-      event.status = 1
-      should be_falsey
+    context 'when status is cancel' do
+      let!(:event) { FactoryGirl.build(:event, status: 1) }
+      it { is_expected.to be_falsey }
     end
 
-    it 'when event_at is before now, should be false' do
-      event.event_at = Time.now - 2.days
-      should be_falsey
+    context 'when event_at is before now' do
+      let!(:event) { FactoryGirl.build(:event, event_at: DateTime.now.yesterday) }
+      it { is_expected.to be_falsey }
     end
 
-    it 'when deadline_at is nil, should be true' do
-      event.deadline_at = nil
-      should be_truthy
+    context 'when deadline_at is nil' do
+      let!(:event) { FactoryGirl.build(:event, deadline_at: nil) }
+      it { is_expected.to be_truthy }
     end
 
-    it 'when deadline_at is before now, should be false' do
-      event.deadline_at = Time.now - 2.days
-      should be_falsey
+    context 'when deadline_at is before now' do
+      let!(:event) { FactoryGirl.build(:event, deadline_at: DateTime.now.yesterday) }
+      it { should be_falsey }
     end
   end
 end

@@ -13,9 +13,10 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :events
+  resources :events do
+    resources :participants
+  end
 
   get  '*not_found' => 'application#routing_error'
   post '*not_found' => 'application#routing_error'
-
 end

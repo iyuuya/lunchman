@@ -13,6 +13,7 @@ class Event < ActiveRecord::Base
   validates_with Validators::EventDateValidator
 
   belongs_to :leader_user, class_name: 'User'
+  has_many :participants
 
   scope :participatable, -> {
     where(status: Event.statuses[:normal])
@@ -36,6 +37,11 @@ class Event < ActiveRecord::Base
     self.event_at_time = event_at.strftime(I18n.t('time.formats.short'))
     self.deadline_at_date = deadline_at.strftime(I18n.t('date.formats.long'))
     self.deadline_at_time = deadline_at.strftime(I18n.t('time.formats.short'))
+  end
+
+  def participants_max?
+    participate_count = Participant.where(event_id: self).count
+    participate_count >= self.max_participants
   end
 
   private

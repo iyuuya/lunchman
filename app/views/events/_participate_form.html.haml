@@ -1,0 +1,16 @@
+- unless event.leader?(current_user)
+  .row
+    .col-md-12
+      .panel.panel-default
+        - if current_user_participant.present?
+          .panel-body
+            = link_to t('layouts.link_to_cancel_participate'), event_participant_path(event, current_user_participant), method: :delete, class: 'btn btn-default'
+        - else
+          -if event.participatable?
+            .panel-body
+              = form_for(event.participants.build, url: event_participants_path(event), class: 'form-horizontal', role: 'form') do |f|
+                = error_messages_for(event)
+                .form-group
+                  = f.label :comment
+                  = f.text_area :comment, class: 'form-control', row: 10
+                = f.submit t('layouts.link_to_participate_event'), class: 'btn btn-default', data: { disable_with: t('layouts.event_participating') }

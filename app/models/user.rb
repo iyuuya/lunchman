@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
 
   has_one :identity
   has_many :event, foreign_key: :leader_user_id
+  has_many :participants
 
   def self.find_or_create_with_email( auth )
     email_from_auth = get_email_from_auth( auth )
@@ -30,6 +31,22 @@ class User < ActiveRecord::Base
   def cancel_event(event_id)
     event = self.event.find(event_id)
     event.update(status: Event.statuses[:cancel], cancel_at: DateTime.now)
+  end
+
+  def participated?(event)
+    self.participants.find_by(event_id: event).normal?
+  end
+
+  def cancel_participant(event_id)
+    ActiveRecord::Base.transaction do
+      participant = self.participants.find_by!(event_id: event_id)
+      participant.destroy
+
+      unless participant.event.normal? && participant.event.participants_max?
+        participant.event.update_attribute(:status, Event.statuses[:normal])
+      end
+    end
+    true
   end
 
   def self.get_email_from_auth( auth )

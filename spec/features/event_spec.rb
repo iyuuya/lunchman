@@ -1,16 +1,17 @@
 require 'rails_helper'
 
 describe 'event_show', type: :feature do
-  let(:event) { FactoryGirl.build(:event) }
-
   include_context 'setup_OmniAuth_config', :google_oauth2
   before do
     visit user_omniauth_authorize_path(provider: :google_oauth2)
   end
 
   describe 'creating new event', js: true do
+    let!(:event) { FactoryGirl.build(:event) }
+
     before do
-      visit new_event_path
+      visit events_path
+      click_link I18n.t('layouts.link_to_event_new_top')
       page.execute_script("$('.bootstraptimepicker_date').removeAttr('readonly')")
       page.execute_script("$('.bootstraptimepicker_time').removeAttr('readonly')")
       fill_in 'event[name]',              with: event.name
@@ -22,42 +23,46 @@ describe 'event_show', type: :feature do
       fill_in 'event[max_participants]',  with: event.max_participants
     end
 
-    describe 'fillin form' do
-      it 'click and increse event count' do
+    describe 'when event created' do
+      it 'Event count is increased by 1' do
         expect { click_button I18n.t('layouts.event_new_label') }.to change(Event, :count).from(0).to(1)
       end
     end
 
-    describe 'fillin form and click' do
+    describe 'successes to creating new event' do
       before do
         click_button I18n.t('layouts.event_new_label')
       end
 
-      it 'should redirect to events#index 'do
+      it 'redirect to events#index 'do
         expect(page.current_path).to eq events_path
       end
-      it 'should have no error classes in css' do
+      it 'page has no error' do
         expect(page).not_to have_css('div.alert-danger')
       end
-      it 'should have event name in content' do
+      it 'content has event name' do
         expect(page).to have_content event.name
       end
-      it 'should have leader user name in content' do
+      it 'content has leader user' do
         expect(page).to have_content event.leader_user.name
-      end
-
-      describe 'show event info page' do
-        before do
-          click_link event.name
-        end
-
-        it 'should have layouts.event_show_top in content'do
-          expect(page).to have_content I18n.t('layouts.event_show_top')
-        end
-        it 'should have event name in content' do
-          expect(page).to have_content event.name
-        end
       end
     end
   end
+
+  describe 'visiting created event detail page' do
+    let!(:event) { FactoryGirl.create(:event) }
+
+    before do
+      visit events_path
+      click_link event.name
+    end
+
+    it 'content has layouts.event_show_top'do
+      expect(page).to have_content I18n.t('layouts.event_show_top')
+    end
+    it 'content has event name' do
+      expect(page).to have_content event.name
+    end
+  end
+
 end

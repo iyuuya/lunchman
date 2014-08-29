@@ -15,7 +15,7 @@ class Event < ActiveRecord::Base
   belongs_to :leader_user, class_name: 'User'
 
   def participatable?
-    normal? && event_at.future? && (deadline_at.blank? || (deadline_at.present? && deadline_at.future?))
+    normal? && event_at.future? && (deadline_at.blank? || deadline_at.future?)
   end
 
   private

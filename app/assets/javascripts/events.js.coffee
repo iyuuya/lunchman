@@ -1,4 +1,4 @@
-$ ->
+$(document).on 'ready page:load', ->
   $(".datepicker_date").attr({'data-date-format':"YYYY年MM月DD日"});
 
   now = new Date()

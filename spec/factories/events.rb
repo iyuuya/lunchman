@@ -10,7 +10,7 @@ FactoryGirl.define do
     status              { 0 }
     cancel_at           { nil }
 
-    factory :event_without_validate do
+    factory :event_without_validation do
       to_create do |instance|
         instance.save validate: false
       end

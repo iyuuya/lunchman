@@ -56,9 +56,9 @@ describe Event do
       context 'creating invalid data' do
         let!(:event) {
           [
-            FactoryGirl.create(:event_without_validate, status: Event.statuses[:cancel]),
-            FactoryGirl.create(:event_without_validate, event_at: 1.days.ago),
-            FactoryGirl.create(:event_without_validate, deadline_at: 1.days.ago)
+            FactoryGirl.create(:event_without_validation, status: Event.statuses[:cancel]),
+            FactoryGirl.create(:event_without_validation, event_at: 1.days.ago),
+            FactoryGirl.create(:event_without_validation, deadline_at: 1.days.ago)
           ]
         }
         it 'should not select created data' do

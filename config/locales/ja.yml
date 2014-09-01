@@ -9,27 +9,39 @@ ja:
         event_at: 開催日時
         deadline_at: 締め切り日時
         comment: 詳細
-        max_paticipants: 最大参加人数
+        max_participants: 最大参加人数
+        status: 募集状況
 
   layouts:
     link_to_event_new_top: ランチ仲間を募集作成する
+    link_to_event_list: 募集の一覧を表示する
 
     event_index_top: ランチ仲間募集！
-
     event_new_top: ランチ仲間募集
+    event_show_top: ランチ仲間募集中！
+    event_list_top: ランチ仲間募集中 一覧
+
     event_new_making: 作成中…
-
-    event_list_top: ランチ仲間募集中
-
     event_new_label: 作成
+    event_leader_name: 企画者名
+
+    event_status_participatable: 参加ＯＫ
+    event_status_not_participatable: 参加不可
 
     date_set_label: 日付を指定
     time_set_label: 時間を指定
 
     logout: 正常にログアウトしました
+    not_setting: 設定されていません
+    participant_unit: 人
 
     notice:
       create_event: ランチ募集を開始しました
+
+  time:
+    formats:
+      long: '%Y年%m月%d日 %H:%M %p'
+      short: '%H:%M %p'
 
   date:
     abbr_day_names:
@@ -64,7 +76,7 @@ ja:
     - 土曜日
     formats:
       default: ! '%Y/%m/%d'
-      long: ! '%Y年%m月%d日(%a)'
+      long: ! '%Y年%m月%d日'
       short: ! '%m/%d'
     month_names:
     -
@@ -89,6 +101,7 @@ ja:
     format: ! '%{attribute}%{message}'
     messages:
       event_at_should_be_after_now: は現在時間よりも後に設定して下さい
+      deadline_at_should_be_after_now: は現在時間よりも後に設定して下さい
       deadline_at_should_be_before_event_at: は%{event_at}よりも前に設定して下さい
 
       record_invalid: バリデーションに失敗しました。 %{errors}

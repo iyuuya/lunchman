@@ -1,0 +1,49 @@
+.page-header
+  %h1= t('layouts.event_show_top')
+
+.row
+  .col-md-8
+    .panel.panel-default
+      .panel-heading
+        = t('activerecord.attributes.event.status')
+      .panel-body
+        = status_participatable( @event )
+
+    .panel.panel-default
+      .panel-heading
+        = t('activerecord.attributes.event.name')
+      .panel-body
+        = @event.name
+
+    .panel.panel-default
+      .panel-heading
+        = t('layouts.event_leader_name')
+      .panel-body
+        = @event.leader_user.name
+
+    .panel.panel-default
+      .panel-heading
+        = t('activerecord.attributes.event.event_at')
+      .panel-body
+        = @event.event_at.strftime(I18n.t('time.formats.long'))
+
+    .panel.panel-default
+      .panel-heading
+        = t('activerecord.attributes.event.deadline_at')
+      .panel-body
+        = deadline_at( @event )
+
+    .panel.panel-default
+      .panel-heading
+        = t('activerecord.attributes.event.comment')
+      .panel-body
+        = @event.comment
+
+    .panel.panel-default
+      .panel-heading
+        = t('activerecord.attributes.event.max_participants')
+      .panel-body
+        = @event.max_participants
+        = t('layouts.participant_unit')
+
+    = link_to t('layouts.link_to_event_list'), events_path

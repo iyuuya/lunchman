@@ -56,6 +56,7 @@ group :development, :test do
   gem 'rspec-expectations'
   gem 'rspec-mocks'
   gem 'rspec-support'
+  gem 'spring-commands-rspec'
 
   gem 'factory_girl_rails', '~> 4.4.1'
 

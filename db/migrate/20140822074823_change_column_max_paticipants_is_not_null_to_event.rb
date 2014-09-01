@@ -1,5 +1,5 @@
 class ChangeColumnMaxPaticipantsIsNotNullToEvent < ActiveRecord::Migration
   def change
-    change_column :events, :max_paticipants, :integer, null: false
+    change_column :events, :max_participants, :integer, null: false
   end
 end

@@ -6,7 +6,7 @@ class CreateEvents < ActiveRecord::Migration
       t.datetime :event_at
       t.datetime :deadline_at
       t.text :comment
-      t.integer :max_paticipants
+      t.integer :max_participants
       t.integer :venue_id
       t.integer :status
       t.datetime :cancel_at

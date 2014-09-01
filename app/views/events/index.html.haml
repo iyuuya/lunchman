@@ -10,7 +10,7 @@
   .panel-body
     %h3= t('layouts.event_list_top')
     %ul.list-group
-      - @event.each do |event|
+      - @events.each do |event|
         %li.list-group-item
           %h5
             = link_to event.name, event_path( event.id )

@@ -2,7 +2,12 @@
   %h1= t('layouts.event_show_top')
 
 .row
-  .col-md-8
+  .col-md-4
+    - if @event.created_by?(current_user)
+      = link_to t('layouts.event_edit'), edit_event_path(@event), class: 'btn'
+      = link_to t('layouts.event_delete'), event_path(@event), class: 'btn', method: :delete, data: { confirm: t('confirm.event_delete') }
+.row
+  .col-md-12
     .panel.panel-default
       .panel-heading
         = t('activerecord.attributes.event.status')
@@ -45,5 +50,6 @@
       .panel-body
         = @event.max_participants
         = t('layouts.participant_unit')
-
-    = link_to t('layouts.link_to_event_list'), events_path
+.row
+  .col-md-8
+    = link_to t('layouts.link_to_event_list'), events_path, class: 'btn'

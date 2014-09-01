@@ -65,4 +65,22 @@ describe 'event_show', type: :feature do
     end
   end
 
+  describe 'editing created event' do
+    let!(:event) { FactoryGirl.create(:event) }
+    let!(:new_event_name) { 'new event name!' }
+
+    context 'visiting edit form' do
+      before do
+        visit event_path(event)
+        click_link I18n.t('layouts.event_edit')
+        fill_in 'event[name]', with: new_event_name
+        click_button I18n.t('layouts.event_edit_label')
+      end
+
+      subject { Event.find(event).name }
+      it 'event name should change to new name' do
+        is_expected.to eq(new_event_name)
+      end
+    end
+  end
 end

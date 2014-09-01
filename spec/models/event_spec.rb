@@ -62,4 +62,20 @@ describe Event do
       end
     end
   end
+
+  describe '#created_by?' do
+    let!(:user) { FactoryGirl.create(:user) }
+    let!(:another_user) { FactoryGirl.create(:user) }
+    subject { event.created_by?(user) }
+
+    context 'creating event with user' do
+      let!(:event) { FactoryGirl.create(:event, leader_user_id: user.id) }
+      it { is_expected.to be_truthy }
+    end
+
+    context 'creating event with another user ' do
+      let!(:event) { FactoryGirl.create(:event, leader_user_id: another_user.id) }
+      it { is_expected.to be_falsey }
+    end
+  end
 end

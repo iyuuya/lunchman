@@ -24,6 +24,11 @@ class Event < ActiveRecord::Base
     normal? && event_at.future? && (deadline_at.blank? || deadline_at.future?)
   end
 
+  def created_by?(user)
+    return false if user.blank?
+    leader_user_id == user.id
+  end
+
   private
 
   def set_default_value_if_nil

@@ -44,23 +44,21 @@ describe Event do
 
   describe 'scope' do
     describe '#participatable' do
-      context 'creating event data' do
-        let!(:event) { FactoryGirl.create(:event) }
-        let!(:event_without_validation) {
-          [
-            FactoryGirl.create(:event_without_validation, status: Event.statuses[:cancel]),
-            FactoryGirl.create(:event_without_validation, event_at: 1.days.ago),
-            FactoryGirl.create(:event_without_validation, deadline_at: 1.days.ago)
-          ]
-        }
+      let!(:event) { FactoryGirl.create(:event) }
+      let!(:event_without_validation) {
+        [
+          FactoryGirl.create(:event_without_validation, status: Event.statuses[:cancel]),
+          FactoryGirl.create(:event_without_validation, event_at: 1.days.ago),
+          FactoryGirl.create(:event_without_validation, deadline_at: 1.days.ago)
+        ]
+      }
 
-        subject { Event.participatable }
-        it 'giving valid data, should select created data' do
-          is_expected.to include(event)
-        end
-        it 'giving invalid data, should not select created data' do
-          is_expected.not_to include(*event_without_validation)
-        end
+      subject { Event.participatable }
+      it 'giving valid data, should select created data' do
+        is_expected.to include(event)
+      end
+      it 'giving invalid data, should not select created data' do
+        is_expected.not_to include(*event_without_validation)
       end
     end
   end

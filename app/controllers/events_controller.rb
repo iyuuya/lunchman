@@ -33,6 +33,12 @@ class EventsController < ApplicationController
     @event.deadline_at_time = @event.deadline_at.strftime(I18n.t('time.formats.short'))
   end
 
+  def destroy
+    event = current_user.event.find(params[:id])
+    event.update(status: Event.statuses[:cancel], cancel_at: DateTime.now)
+    redirect_to root_path, notice: I18n.t('layouts.notice.cancel_event')
+  end
+
   def create
     build_params = event_params
     build_params[:event_at] = format_datetime_string(build_params[:event_at_date], build_params[:event_at_time])

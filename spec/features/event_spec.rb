@@ -83,4 +83,22 @@ describe 'event_show', type: :feature do
       end
     end
   end
+
+  describe 'cancel created event', js: true do
+    let!(:event) { FactoryGirl.create(:event) }
+    before do
+      visit event_path(event)
+      click_link I18n.t('layouts.event_delete')
+    end
+
+    context 'clicking event delete link' do
+      let!(:canceled_event) { Event.find(event) }
+      it 'status should be cancel' do
+        expect(canceled_event).to be_cancel
+      end
+      it 'cancel_at should have value' do
+        expect(canceled_event.cancel_at).to be_truthy
+      end
+    end
+  end
 end

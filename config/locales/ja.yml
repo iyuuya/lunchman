@@ -44,6 +44,7 @@ ja:
     notice:
       create_event: ランチ募集を開始しました
       edit_event: 募集内容を変更しました
+      cancel_event: 募集を取りやめました
 
   confirm:
     event_delete: 本当に削除しますか？

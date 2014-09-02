@@ -6,14 +6,20 @@
     %h5
       = link_to t('layouts.link_to_event_new_top'), new_event_path
 
-.panel.panel-default
+.panel
   .panel-body
     %h3= t('layouts.event_list_top')
-    %ul.list-group
-      - @event.each do |event|
-        %li.list-group-item
-          %h5
-            = link_to event.name, event_path( event.id )
+    .list-group
+      - @events.each do |event|
+        .row.list-group-item
+          .col-md-2
+            %h5
+              = event.event_at.strftime(I18n.t('time.formats.middle'))
+          .col-md-8
+            %h4
+              = link_to event.name, event_path( event.id )
+          .col-md-2
             %small
               by
               = event.leader_user.name
+

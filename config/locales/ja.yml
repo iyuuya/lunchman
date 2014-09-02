@@ -125,6 +125,9 @@ ja:
       inclusion: は一覧にありません。
       blank: を入力してください。
 
+      page_not_found: ページが存在しません！
+      page_error: エラーが発生しました！
+
     template:
       body: 次の項目を確認してください。
       header:

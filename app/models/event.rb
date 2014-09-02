@@ -24,9 +24,8 @@ class Event < ActiveRecord::Base
     normal? && event_at.future? && (deadline_at.blank? || deadline_at.future?)
   end
 
-  def created_by?(user)
-    return false if user.blank?
-    leader_user_id == user.id
+  def leader?(user)
+    user.present? && (user.id == leader_user_id)
   end
 
   def set_separated_datetime

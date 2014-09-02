@@ -63,10 +63,10 @@ describe Event do
     end
   end
 
-  describe '#created_by?' do
+  describe '#leader?' do
     let!(:user) { FactoryGirl.create(:user) }
     let!(:another_user) { FactoryGirl.create(:user) }
-    subject { event.created_by?(user) }
+    subject { event.leader?(user) }
 
     context 'creating event with user' do
       let!(:event) { FactoryGirl.create(:event, leader_user_id: user.id) }

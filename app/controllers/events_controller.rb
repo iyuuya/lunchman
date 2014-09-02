@@ -27,15 +27,11 @@ class EventsController < ApplicationController
 
   def edit
     @event = current_user.event.find(params[:id])
-    @event.event_at_date = @event.event_at.strftime(I18n.t('date.formats.long'))
-    @event.event_at_time = @event.event_at.strftime(I18n.t('time.formats.short'))
-    @event.deadline_at_date = @event.deadline_at.strftime(I18n.t('date.formats.long'))
-    @event.deadline_at_time = @event.deadline_at.strftime(I18n.t('time.formats.short'))
+    @event.set_separated_datetime
   end
 
   def destroy
-    event = current_user.event.find(params[:id])
-    event.update(status: Event.statuses[:cancel], cancel_at: DateTime.now)
+    current_user.cancel_event(params[:id])
     redirect_to root_path, notice: I18n.t('layouts.notice.cancel_event')
   end
 

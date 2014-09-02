@@ -29,6 +29,13 @@ class Event < ActiveRecord::Base
     leader_user_id == user.id
   end
 
+  def set_separated_datetime
+    self.event_at_date = event_at.strftime(I18n.t('date.formats.long'))
+    self.event_at_time = event_at.strftime(I18n.t('time.formats.short'))
+    self.deadline_at_date = deadline_at.strftime(I18n.t('date.formats.long'))
+    self.deadline_at_time = deadline_at.strftime(I18n.t('time.formats.short'))
+  end
+
   private
 
   def set_default_value_if_nil

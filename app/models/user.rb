@@ -27,6 +27,11 @@ class User < ActiveRecord::Base
     user
   end
 
+  def cancel_event(event_id)
+    event = self.event.find(event_id)
+    event.update(status: Event.statuses[:cancel], cancel_at: DateTime.now)
+  end
+
   def self.get_email_from_auth( auth )
     if auth.provider == 'google_oauth2'
       email = auth.info.email

@@ -21,13 +21,11 @@ class Event < ActiveRecord::Base
   }
 
   before_validation do
-    if self.event_at.blank? && (self.event_at_date.present? && self.event_at_time.present?)
-      self.event_at = format_datetime_string(self.event_at_date, self.event_at_time)
-    end
+    formatted_datetime = format_to_datetime(self.event_at_date, self.event_at_time)
+    self.event_at = formatted_datetime if self.event_at.blank? && formatted_datetime
 
-    if self.deadline_at.blank? && (self.deadline_at_date.present? && self.deadline_at_time.present?)
-      self.deadline_at = format_datetime_string(self.deadline_at_date, self.deadline_at_time)
-    end
+    formatted_datetime = format_to_datetime(self.deadline_at_date, self.deadline_at_time)
+    self.deadline_at = formatted_datetime if self.deadline_at.blank? && formatted_datetime
   end
 
   def participatable?
@@ -51,8 +49,10 @@ class Event < ActiveRecord::Base
     self.max_participants = 10 if self.max_participants.nil?
   end
 
-  def format_datetime_string(date_string_from_form, time_string_from_form)
-    date_string_from_form = date_string_from_form.gsub(/([0-9]+)年([0-9]+)月([0-9]+)日/, '\1/\2/\3')
-    Time.strptime('%s %s' % [date_string_from_form, time_string_from_form], '%Y/%m/%d %H:%M %p')
+  def format_to_datetime(date_string, time_string)
+    return unless date_string.present? && time_string.present?
+
+    date_string = date_string.gsub(/([0-9]+)年([0-9]+)月([0-9]+)日/, '\1/\2/\3')
+    DateTime.strptime('%s %s' % [date_string, time_string], '%Y/%m/%d %H:%M %p')
   end
 end

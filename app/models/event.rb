@@ -20,6 +20,16 @@ class Event < ActiveRecord::Base
     .where('deadline_at is null OR deadline_at > :now', { now: Time.now })
   }
 
+  before_validation do
+    if self.event_at.blank? && (self.event_at_date.present? && self.event_at_time.present?)
+      self.event_at = format_datetime_string(self.event_at_date, self.event_at_time)
+    end
+
+    if self.deadline_at.blank? && (self.deadline_at_date.present? && self.deadline_at_time.present?)
+      self.deadline_at = format_datetime_string(self.deadline_at_date, self.deadline_at_time)
+    end
+  end
+
   def participatable?
     normal? && event_at.future? && (deadline_at.blank? || deadline_at.future?)
   end
@@ -39,5 +49,10 @@ class Event < ActiveRecord::Base
 
   def set_default_value_if_nil
     self.max_participants = 10 if self.max_participants.nil?
+  end
+
+  def format_datetime_string(date_string_from_form, time_string_from_form)
+    date_string_from_form = date_string_from_form.gsub(/([0-9]+)年([0-9]+)月([0-9]+)日/, '\1/\2/\3')
+    Time.strptime('%s %s' % [date_string_from_form, time_string_from_form], '%Y/%m/%d %H:%M %p')
   end
 end

@@ -15,7 +15,7 @@ class EventsController < ApplicationController
 
   def update
     @event = current_user.event.find(params[:id])
-    if @event.update(formated_params)
+    if @event.update(event_params)
       redirect_to @event, notice: I18n.t('layouts.notice.edit_event')
     else
       render :edit
@@ -33,7 +33,7 @@ class EventsController < ApplicationController
   end
 
   def create
-    build_params = formated_params
+    build_params = event_params
     build_params[:status] = Event.statuses[:normal]
 
     @event = current_user.event.build(build_params)
@@ -50,18 +50,6 @@ class EventsController < ApplicationController
   end
 
   private
-
-  def formated_params
-    params_from_form = event_params
-    params_from_form[:event_at] = format_datetime_string(params_from_form[:event_at_date], params_from_form[:event_at_time])
-    params_from_form[:deadline_at] = format_datetime_string(params_from_form[:deadline_at_date], params_from_form[:deadline_at_time])
-    params_from_form
-  end
-
-  def format_datetime_string(date_string_from_form, time_string_from_form)
-    date_string_from_form = date_string_from_form.gsub(/([0-9]+)年([0-9]+)月([0-9]+)日/, '\1/\2/\3')
-    Time.strptime('%s %s' % [date_string_from_form, time_string_from_form], '%Y/%m/%d %H:%M %p')
-  end
 
   def event_params
     params.require(:event).permit(:name, :event_at_date, :event_at_time, :deadline_at_date, :deadline_at_time, :comment, :max_participants)

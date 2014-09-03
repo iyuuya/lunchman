@@ -20,13 +20,8 @@ class Event < ActiveRecord::Base
     .where('deadline_at is null OR deadline_at > :now', { now: Time.now })
   }
 
-  before_validation do
-    formatted_datetime = format_to_datetime(self.event_at_date, self.event_at_time)
-    self.event_at = formatted_datetime if self.event_at.blank? && formatted_datetime
-
-    formatted_datetime = format_to_datetime(self.deadline_at_date, self.deadline_at_time)
-    self.deadline_at = formatted_datetime if self.deadline_at.blank? && formatted_datetime
-  end
+  before_validation :format_event_at
+  before_validation :format_deadline_at
 
   def participatable?
     normal? && event_at.future? && (deadline_at.blank? || deadline_at.future?)
@@ -49,10 +44,20 @@ class Event < ActiveRecord::Base
     self.max_participants = 10 if self.max_participants.nil?
   end
 
+  def format_event_at
+    formatted_datetime = format_to_datetime(self.event_at_date, self.event_at_time)
+    self.event_at = formatted_datetime if formatted_datetime
+  end
+
+  def format_deadline_at
+    formatted_datetime = format_to_datetime(self.deadline_at_date, self.deadline_at_time)
+    self.deadline_at = formatted_datetime if formatted_datetime
+  end
+
   def format_to_datetime(date_string, time_string)
     return unless date_string.present? && time_string.present?
 
     date_string = date_string.gsub(/([0-9]+)年([0-9]+)月([0-9]+)日/, '\1/\2/\3')
-    DateTime.strptime('%s %s' % [date_string, time_string], '%Y/%m/%d %H:%M %p')
+    Time.strptime('%s %s' % [date_string, time_string], '%Y/%m/%d %H:%M %p').in_time_zone.to_datetime
   end
 end

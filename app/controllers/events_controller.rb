@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-  before_action :redirect_login_page_unless_logged_in, except: :show
+  before_action :redirect_login_page_unless_logged_in
 
   def index
     @events = Event.includes(:leader_user).participatable.order(:event_at)

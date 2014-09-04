@@ -11,7 +11,7 @@ class Participant < ActiveRecord::Base
     ActiveRecord::Base.transaction do
       save!
 
-      if self.event.participants_max?
+      if self.event.participate_count_max?
         self.event.update_attribute(:status, Event.statuses[:participants_max])
       end
     end

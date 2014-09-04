@@ -39,7 +39,7 @@ class Event < ActiveRecord::Base
     self.deadline_at_time = deadline_at.strftime(I18n.t('time.formats.short'))
   end
 
-  def participants_max?
+  def participate_count_max?
     participate_count = Participant.where(event_id: self).count
     participate_count >= self.max_participants
   end

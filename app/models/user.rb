@@ -42,7 +42,7 @@ class User < ActiveRecord::Base
       participant = self.participants.find_by!(event_id: event_id)
       participant.destroy
 
-      unless participant.event.normal? && participant.event.participants_max?
+      if participant.event.participants_max? && !participant.event.participate_count_max?
         participant.event.update_attribute(:status, Event.statuses[:normal])
       end
     end

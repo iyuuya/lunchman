@@ -20,9 +20,15 @@ ja:
     event_new_top: ランチ仲間募集
     event_show_top: ランチ仲間募集中！
     event_list_top: ランチ仲間募集中 一覧
+    event_edit_top: 募集内容の変更
+
+    event_edit: 募集内容を変更する
+    event_delete: 募集を停止する
 
     event_new_making: 作成中…
     event_new_label: 作成
+    event_edit_working: 変更中…
+    event_edit_label: 変更
     event_leader_name: 企画者名
 
     event_status_participatable: 参加ＯＫ
@@ -37,12 +43,17 @@ ja:
 
     notice:
       create_event: ランチ募集を開始しました
+      edit_event: 募集内容を変更しました
+      cancel_event: 募集を取りやめました
+
+  confirm:
+    event_delete: 本当に削除しますか？
 
   time:
     formats:
-      long: '%Y年%m月%d日 %H:%M %p'
+      long: '%Y年%m月%d日 %I:%M %p'
       middle: '%m/%d %H:%M'
-      short: '%H:%M %p'
+      short: '%I:%M %p'
 
   date:
     abbr_day_names:
@@ -113,6 +124,9 @@ ja:
       less_than_or_equal_to: は%{count}以下の値にしてください。
       inclusion: は一覧にありません。
       blank: を入力してください。
+
+      page_not_found: ページが存在しません！
+      page_error: エラーが発生しました！
 
     template:
       body: 次の項目を確認してください。

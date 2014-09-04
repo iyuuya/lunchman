@@ -65,4 +65,40 @@ describe 'event_show', type: :feature do
     end
   end
 
+  describe 'editing created event' do
+    let!(:event) { FactoryGirl.create(:event) }
+    let!(:new_event_name) { 'new event name!' }
+
+    context 'visiting edit form' do
+      before do
+        visit event_path(event)
+        click_link I18n.t('layouts.event_edit')
+        fill_in 'event[name]', with: new_event_name
+        click_button I18n.t('layouts.event_edit_label')
+      end
+
+      subject { Event.find(event).name }
+      it 'event name should change to new name' do
+        is_expected.to eq(new_event_name)
+      end
+    end
+  end
+
+  describe 'cancel created event', js: true do
+    let!(:event) { FactoryGirl.create(:event) }
+    before do
+      visit event_path(event)
+      click_link I18n.t('layouts.event_delete')
+    end
+
+    context 'clicking event delete link' do
+      let!(:canceled_event) { Event.find(event) }
+      it 'status should be cancel' do
+        expect(canceled_event).to be_cancel
+      end
+      it 'cancel_at should have value' do
+        expect(canceled_event.cancel_at).to be_truthy
+      end
+    end
+  end
 end

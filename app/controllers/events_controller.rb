@@ -13,21 +13,30 @@ class EventsController < ApplicationController
     @event = current_user.event.build
   end
 
+  def update
+    @event = current_user.event.find(params[:id])
+    if @event.update(event_params)
+      redirect_to @event, notice: I18n.t('layouts.notice.edit_event')
+    else
+      render :edit
+    end
+  end
+
+  def edit
+    @event = current_user.event.find(params[:id])
+    @event.set_separated_datetime
+  end
+
+  def destroy
+    current_user.cancel_event(params[:id])
+    redirect_to root_path, notice: I18n.t('layouts.notice.cancel_event')
+  end
+
   def create
     build_params = event_params
-
-    build_params[:event_at] = Time.strptime(
-          '%s %s' % [format_date_string(build_params[:event_at_date]), build_params[:event_at_time]],
-          '%Y/%m/%d %H:%M %p')
-
-    build_params[:deadline_at] = Time.strptime(
-          '%s %s' % [format_date_string(build_params[:deadline_at_date]), build_params[:deadline_at_time]],
-          '%Y/%m/%d %H:%M %p')
-
     build_params[:status] = Event.statuses[:normal]
 
     @event = current_user.event.build(build_params)
-
     if @event.save
       redirect_to events_path, notice: I18n.t('layouts.notice.create_event')
     else
@@ -41,10 +50,6 @@ class EventsController < ApplicationController
   end
 
   private
-
-  def format_date_string(date_string)
-    date_string.gsub(/([0-9]+)年([0-9]+)月([0-9]+)日/, '\1/\2/\3')
-  end
 
   def event_params
     params.require(:event).permit(:name, :event_at_date, :event_at_time, :deadline_at_date, :deadline_at_time, :comment, :max_participants)

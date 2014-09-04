@@ -11,6 +11,7 @@ gem 'jbuilder', '~> 2.0'
 ####################
 
 gem 'dotenv-rails'
+gem 'dotenv-deployment'
 
 gem 'devise'
 gem 'omniauth'

@@ -7,6 +7,7 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
+    @participants = @event.participants.includes(:user).order(:created_at)
   end
 
   def new

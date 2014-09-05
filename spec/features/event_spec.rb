@@ -222,6 +222,22 @@ describe 'event_show', type: :feature do
           expect(page).to have_content(I18n.t('layouts.cannot_participate'))
         end
       end
+
+      describe 'participated event list (in event index page)' do
+        let!(:event) { FactoryGirl.create(:event) }
+        let!(:participant) { FactoryGirl.create(:participant, event_id: event.id, user_id: current_user.id) }
+
+        context 'participating event, and visit event detail page' do
+          before do
+            visit event_path(event.id)
+          end
+          it 'should content has my name' do
+            within '#participants_list' do
+              expect(page).to have_content current_user.name
+            end
+          end
+        end
+      end
     end
   end
 end

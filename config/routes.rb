@@ -14,7 +14,8 @@ Rails.application.routes.draw do
   end
 
   resources :events do
-    resources :participants
+    post "participate" => "events#participate", as: :participate
+    post "cancel_participate" => "events#cancel_participate", as: :cancel_participate
   end
 
   get  '*not_found' => 'application#routing_error'

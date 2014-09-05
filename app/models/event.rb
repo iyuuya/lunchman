@@ -1,5 +1,5 @@
 class Event < ActiveRecord::Base
-  attr_accessor :event_at_date, :event_at_time, :deadline_at_date, :deadline_at_time
+  attr_accessor :event_at_date, :event_at_time, :deadline_at_date, :deadline_at_time, :participant_comment
   after_initialize :set_default_value_if_nil
 
   enum status: { normal: 0, cancel: 1, participants_max: 2 }
@@ -39,9 +39,47 @@ class Event < ActiveRecord::Base
     self.deadline_at_time = deadline_at.strftime(I18n.t('time.formats.short'))
   end
 
+  def can_participate?
+    self.participatable? && !participate_count_max?
+  end
+
+  def participate!(user, comment)
+    params = {
+      event_id: self.id,
+      user_id: user,
+      comment: comment
+    }
+    participant = user.participants.build(params)
+    ActiveRecord::Base.transaction do
+      participant.save!
+
+      if self.participate_count_max?
+        self.update!(status: Event.statuses[:participants_max])
+      end
+    end
+  end
+
+  def cancel_participant!(user)
+    ActiveRecord::Base.transaction do
+      participant = user.participants.find_by!(event_id: self.id)
+      participant.destroy!
+
+      if self.participants_max? && !self.participate_count_max?
+        self.update!(status: Event.statuses[:normal])
+      end
+    end
+  end
+
+  def participated?(user)
+    user.participants.find_by(event_id: self.id).present?
+  end
+
   def participate_count_max?
-    participate_count = Participant.where(event_id: self).count
     participate_count >= self.max_participants
+  end
+
+  def participate_count
+    Participant.where(event_id: self.id).count
   end
 
   private

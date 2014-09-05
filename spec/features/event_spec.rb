@@ -211,6 +211,17 @@ describe 'event_show', type: :feature do
           end
         end
       end
+
+      context 'giving canceled event, and visiting event detail page' do
+        let!(:event_canceled) { FactoryGirl.create(:event, status: Event.statuses[:cancel]) }
+        before do
+          visit event_path(event_canceled)
+        end
+
+        it 'content should have layouts.cannot_participate' do
+          expect(page).to have_content(I18n.t('layouts.cannot_participate'))
+        end
+      end
     end
   end
 end

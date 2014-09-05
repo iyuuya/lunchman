@@ -1,13 +1,8 @@
 require 'rails_helper'
 
 describe Participant do
-  describe '#participate_event' do
-    let!(:event) { FactoryGirl.create(:event) }
-    let!(:participant) { FactoryGirl.build(:participant, event_id: event.id) }
-
-    it { expect { participant.create_participant }.to change(Participant, :count).by(1) }
-
-    context 'giving un-participatable event' do
+  describe 'Validator' do
+    context 'when event status is cancel' do
       let!(:event) { FactoryGirl.create(:event, status: Event.statuses[:cancel]) }
       let!(:participant) { FactoryGirl.build(:participant, event_id: event.id) }
 
@@ -39,6 +34,5 @@ describe Participant do
       subject { participant }
       it { is_expected.not_to be_valid }
     end
-
   end
 end

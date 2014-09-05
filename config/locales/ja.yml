@@ -11,6 +11,7 @@ ja:
         comment: 詳細
         max_participants: 最大参加人数
         status: 募集状況
+        participant_comment: 参加コメント
       participant:
         comment: コメント
 
@@ -44,6 +45,7 @@ ja:
 
     logout: 正常にログアウトしました
     not_setting: 設定されていません
+    cannot_participate: このイベントには参加出来ません
     participant_unit: 人
 
     notice:
@@ -52,7 +54,9 @@ ja:
       cancel_event: 募集を取りやめました
       participate_event: この募集に参加しました
       cancel_participate_event: 参加を取り止めました
+    alert:
       participate_event_failure: この募集への参加に失敗しました
+      cancel_participate_event_failure: 参加の取り止めに失敗しました
       participate_event_stopped: このイベントの参加募集は終了しています
 
   confirm:

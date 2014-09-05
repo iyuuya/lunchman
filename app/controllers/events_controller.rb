@@ -7,7 +7,6 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
-    @current_user_participant = current_user.participants.find_by(event_id: params[:id])
   end
 
   def new
@@ -50,9 +49,31 @@ class EventsController < ApplicationController
     end
   end
 
+  def participate
+    begin
+      event = Event.find(params[:event_id])
+      event.participate!(current_user, event_params.fetch(:participant_comment))
+      flash[:notice] = I18n.t('layouts.notice.participate_event')
+    rescue
+      flash[:alert] = I18n.t('layouts.alert.participate_event_failure')
+    end
+    redirect_to event_path(params[:event_id])
+  end
+
+  def cancel_participate
+    begin
+      event = Event.find(params[:event_id])
+      event.cancel_participant!(current_user)
+      flash[:notice] = I18n.t('layouts.notice.cancel_participate_event')
+    rescue
+      flash[:alert] = I18n.t('layouts.alert.cancel_participate_event_failure')
+    end
+    redirect_to event_path(params[:event_id])
+  end
+
   private
 
   def event_params
-    params.require(:event).permit(:name, :event_at_date, :event_at_time, :deadline_at_date, :deadline_at_time, :comment, :max_participants)
+    params.require(:event).permit(:name, :event_at_date, :event_at_time, :deadline_at_date, :deadline_at_time, :comment, :max_participants, :participant_comment)
   end
 end

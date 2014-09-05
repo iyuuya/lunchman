@@ -33,22 +33,6 @@ class User < ActiveRecord::Base
     event.update(status: Event.statuses[:cancel], cancel_at: DateTime.now)
   end
 
-  def participated?(event)
-    self.participants.find_by(event_id: event).normal?
-  end
-
-  def cancel_participant(event_id)
-    ActiveRecord::Base.transaction do
-      participant = self.participants.find_by!(event_id: event_id)
-      participant.destroy
-
-      if participant.event.participants_max? && !participant.event.participate_count_max?
-        participant.event.update_attribute(:status, Event.statuses[:normal])
-      end
-    end
-    true
-  end
-
   def self.get_email_from_auth( auth )
     if auth.provider == 'google_oauth2'
       email = auth.info.email

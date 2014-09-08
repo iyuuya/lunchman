@@ -11,10 +11,15 @@ ja:
         comment: 詳細
         max_participants: 最大参加人数
         status: 募集状況
+        participant_comment: 参加コメント
+      participant:
+        comment: コメント
 
   layouts:
     link_to_event_new_top: ランチ仲間を募集作成する
     link_to_event_list: 募集の一覧を表示する
+    link_to_participate_event: この募集に参加する
+    link_to_cancel_participate: 参加を中止する
 
     event_index_top: ランチ仲間募集！
     event_new_top: ランチ仲間募集
@@ -30,6 +35,7 @@ ja:
     event_edit_working: 変更中…
     event_edit_label: 変更
     event_leader_name: 企画者名
+    event_participating: 登録中…
 
     event_status_participatable: 参加ＯＫ
     event_status_not_participatable: 参加不可
@@ -39,12 +45,19 @@ ja:
 
     logout: 正常にログアウトしました
     not_setting: 設定されていません
+    cannot_participate: このイベントには参加出来ません
     participant_unit: 人
 
     notice:
       create_event: ランチ募集を開始しました
       edit_event: 募集内容を変更しました
       cancel_event: 募集を取りやめました
+      participate_event: この募集に参加しました
+      cancel_participate_event: 参加を取り止めました
+    alert:
+      participate_event_failure: この募集への参加に失敗しました
+      cancel_participate_event_failure: 参加の取り止めに失敗しました
+      participate_event_stopped: このイベントの参加募集は終了しています
 
   confirm:
     event_delete: 本当に削除しますか？
@@ -115,6 +128,8 @@ ja:
       event_at_should_be_after_now: は現在時間よりも後に設定して下さい
       deadline_at_should_be_after_now: は現在時間よりも後に設定して下さい
       deadline_at_should_be_before_event_at: は%{event_at}よりも前に設定して下さい
+      unparticipatable_event: この募集は参加を受け付けていません
+      max_participants_event: この募集は参加希望者がいっぱいです
 
       record_invalid: バリデーションに失敗しました。 %{errors}
       not_a_number: は数値で入力してください。

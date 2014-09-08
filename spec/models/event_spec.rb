@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 describe Event do
+  let!(:user) { FactoryGirl.create(:user) }
+
   describe 'relationships' do
     it { should belong_to :leader_user }
   end
@@ -64,7 +66,6 @@ describe Event do
   end
 
   describe '#leader?' do
-    let!(:user) { FactoryGirl.create(:user) }
     let!(:another_user) { FactoryGirl.create(:user) }
     subject { event.leader?(user) }
 
@@ -76,6 +77,68 @@ describe Event do
     context 'creating event with another user ' do
       let!(:event) { FactoryGirl.create(:event, leader_user_id: another_user.id) }
       it { is_expected.to be_falsey }
+    end
+  end
+
+  describe '#participate!' do
+    let!(:event) { FactoryGirl.create(:event) }
+    it { expect { event.participate!(user, 'test') }.to change(Participant, :count).by(1) }
+  end
+
+  describe '#cancel_participant' do
+    let!(:event) { FactoryGirl.create(:event) }
+    let!(:participant) { FactoryGirl.create(:participant, event_id: event.id, user_id: user.id) }
+
+    it { expect { event.cancel_participant!(user) }.to change(Participant, :count).by(-1) }
+  end
+
+  describe '#participated?' do
+    let!(:event) { FactoryGirl.create(:event) }
+    let!(:participant) { FactoryGirl.create(:participant, event_id: event.id, user_id: user.id) }
+
+    subject { event.participated?(user) }
+    it { is_expected.to be_truthy }
+
+    context 'giving another user' do
+      let!(:another_user) { FactoryGirl.create(:user) }
+
+      subject { event.participated?(another_user) }
+      it { is_expected.to be_falsey }
+    end
+  end
+
+  describe 'user participate' do
+    let!(:event) { FactoryGirl.create(:event, max_participants: 4) }
+    let!(:users) { FactoryGirl.create_list(:user, 3) }
+
+    before do
+      users.each do |user|
+        event.participate!(user, 'test')
+      end
+    end
+
+    context 'event max_participants is 4, and 3 users participated' do
+      describe '#participate_count' do
+        subject { event.participate_count }
+        it { is_expected.to eq 3 }
+      end
+
+      describe '#participate_count_max?' do
+        subject { event.participate_count_max? }
+        it { is_expected.to be_falsey }
+      end
+
+      context 'participating another user' do
+        let!(:another_user) { FactoryGirl.create(:user) }
+        before do
+          event.participate!(another_user, 'test')
+        end
+
+        describe '#participate_count_max' do
+          subject { event.participate_count_max? }
+          it  { is_expected.to be_truthy }
+        end
+      end
     end
   end
 end

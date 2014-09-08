@@ -1,25 +1,28 @@
 shared_context "setup_OmniAuth_config" do |service|
-    before do
-      OmniAuth.config.test_mode = true
+  before do
+    OmniAuth.config.test_mode = true
 
-      OmniAuth.config.mock_auth[service] = OmniAuth::AuthHash.new({
-        provider: service.to_s,
-        uid:      '111853197015656344117'#rtomita@aiming-inc.com
-      })
-
-      OmniAuth.config.add_mock(service,
-        { info: {
-            email: "rtomita@aiming-inc.com",
-            name: "富田理央"
-            },
-          extra: {
-            raw_info: {
-              name: "富田理央"
-            }
+    oauthinfo = {
+      uid:    Faker::Number.number(21),
+      name:   Faker::Name.name,
+      email:  Faker::Internet.slug + Faker::Internet.free_email
+    }
+    OmniAuth.config.mock_auth[service] = OmniAuth::AuthHash.new(
+      {
+        provider:   service.to_s,
+        uid:        oauthinfo[:uid],
+        info: {
+          email:    oauthinfo[:email],
+          name:     oauthinfo[:name]
+        },
+        extra: {
+          raw_info: {
+            name:    oauthinfo[:name]
           }
         }
-      )
-    end
+      }
+    )
+  end
 
-    let(:oauth_user){ OmniAuth.config.mock_auth[service] }
+  let(:oauth_user) { OmniAuth.config.mock_auth[service] }
 end

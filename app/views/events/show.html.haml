@@ -16,6 +16,5 @@
   .col-md-12
     .row
       = render partial: 'event_detail', locals: { event: @event }
-.row
-  .col-md-12
-    = link_to t('layouts.link_to_event_list'), events_path, class: 'btn'
+
+= render 'layouts/footer'

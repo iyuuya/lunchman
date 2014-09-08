@@ -17,7 +17,7 @@ ja:
 
   layouts:
     link_to_event_new_top: ランチ仲間を募集作成する
-    link_to_event_list: 募集の一覧を表示する
+    link_to_event_list: 募集の一覧へ戻る
     link_to_participate_event: この募集に参加する
     link_to_cancel_participate: 参加を中止する
 

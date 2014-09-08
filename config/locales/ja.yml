@@ -20,6 +20,7 @@ ja:
     link_to_event_list: 募集の一覧へ戻る
     link_to_participate_event: この募集に参加する
     link_to_cancel_participate: 参加を中止する
+    link_logout: ログアウト
 
     event_index_top: ランチ仲間募集！
     event_new_top: ランチ仲間募集

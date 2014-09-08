@@ -79,7 +79,7 @@ class Event < ActiveRecord::Base
   end
 
   def participate_count
-    Participant.where(event_id: self.id).count
+    self.participants.count
   end
 
   private

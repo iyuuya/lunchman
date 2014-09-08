@@ -1,5 +1,6 @@
 $(document).on 'ready page:load', ->
   $(".datepicker_date").attr({'data-date-format':"YYYY年MM月DD日"});
+  $(".datepicker_time").attr({'data-date-format':"HH:mm"});
 
   now = new Date()
   y = now.getFullYear()

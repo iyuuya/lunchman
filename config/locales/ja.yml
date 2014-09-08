@@ -72,9 +72,9 @@ ja:
 
   time:
     formats:
-      long: '%Y年%m月%d日 %I:%M %p'
-      middle: '%m/%d %H:%M'
-      short: '%I:%M %p'
+      long: '%Y年%-m月%-d日 %-H:%M'
+      middle: '%-m/%-d %H:%M'
+      short: '%H:%M'
 
   date:
     abbr_day_names:

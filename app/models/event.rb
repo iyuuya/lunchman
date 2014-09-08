@@ -102,6 +102,6 @@ class Event < ActiveRecord::Base
     return unless date_string.present? && time_string.present?
 
     date_string = date_string.gsub(/([0-9]+)年([0-9]+)月([0-9]+)日/, '\1/\2/\3')
-    Time.strptime('%s %s' % [date_string, time_string], '%Y/%m/%d %H:%M %p').in_time_zone.to_datetime
+    Time.strptime('%s %s' % [date_string, time_string], '%Y/%m/%d %H:%M').in_time_zone.to_datetime
   end
 end

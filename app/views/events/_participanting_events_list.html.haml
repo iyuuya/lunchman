@@ -1,0 +1,14 @@
+.panel.panel-success
+  .panel-heading
+    = t('layouts.participating_event_list')
+  .panel-body
+    - if current_user_participants.present?
+      #participating_event_list.row
+        - current_user_participants.each do |participant|
+          .col-md-2
+            = participant.event.event_at.strftime(I18n.t('time.formats.middle'))
+          .col-md-10
+            = link_to participant.event.name, event_path(participant.event.id)
+    - else
+      .text-danger
+        = t('layouts.no_participating_event')

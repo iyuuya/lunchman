@@ -3,6 +3,7 @@ class EventsController < ApplicationController
 
   def index
     @events = Event.includes(:leader_user).participatable.order(:event_at)
+    @current_user_participants = current_user.participants.includes(:event).order('events.event_at')
   end
 
   def show

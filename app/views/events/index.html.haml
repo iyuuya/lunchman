@@ -6,9 +6,12 @@
     %h5
       = link_to t('layouts.link_to_event_new_top'), new_event_path
 
+= render partial: 'participanting_events_list', locals: { current_user_participants: @current_user_participants }
+
 .panel
   .panel-body
-    %h3= t('layouts.event_list_top')
+    %h3
+      = t('layouts.event_list_top')
     .list-group
       - @events.each do |event|
         .row.list-group-item
@@ -22,4 +25,3 @@
             %small
               by
               = event.leader_user.name
-

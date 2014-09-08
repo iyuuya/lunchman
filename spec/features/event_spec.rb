@@ -227,6 +227,17 @@ describe 'event_show', type: :feature do
         let!(:event) { FactoryGirl.create(:event) }
         let!(:participant) { FactoryGirl.create(:participant, event_id: event.id, user_id: current_user.id) }
 
+        context 'participating event, and visit event index' do
+          before do
+            visit events_path
+          end
+          it 'should content has participated event name' do
+            within '#participating_event_list' do
+              expect(page).to have_content event.name
+            end
+          end
+        end
+
         context 'participating event, and visit event detail page' do
           before do
             visit event_path(event.id)

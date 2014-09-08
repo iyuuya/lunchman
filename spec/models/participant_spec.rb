@@ -34,5 +34,36 @@ describe Participant do
       subject { participant }
       it { is_expected.not_to be_valid }
     end
+
+    describe 'event_id and user_id uniqueness' do
+      let!(:event) {  FactoryGirl.create(:event) }
+      let!(:event_id) { event.id }
+      let!(:participant) { FactoryGirl.build(:participant, event_id: event_id, user_id: user_id) }
+      let!(:same_participant) { FactoryGirl.build(:participant, event_id: event_id, user_id: user_id) }
+
+      let!(:another_event) {  FactoryGirl.create(:event) }
+      let!(:another_event_id) { another_event.id }
+      let!(:another_participant) { FactoryGirl.build(:participant, event_id: another_event_id, user_id: user_id) }
+
+      let!(:user_id) { 1 }
+
+      before do
+        participant.save
+      end
+
+      context 'givind same event_id and user_id event' do
+        subject { same_participant }
+        it 'should not be valid' do
+          is_expected.not_to be_valid
+        end
+      end
+
+      context 'giving another event_id event' do
+        subject { another_participant }
+        it 'should be valid' do
+          is_expected.to be_valid
+        end
+      end
+    end
   end
 end

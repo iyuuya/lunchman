@@ -45,6 +45,8 @@ ActiveRecord::Schema.define(version: 20140829044718) do
     t.datetime "updated_at"
   end
 
+  add_index "participants", ["event_id", "user_id"], name: "index_participants_on_event_id_and_user_id", unique: true
+
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false

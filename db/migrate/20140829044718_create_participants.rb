@@ -7,5 +7,6 @@ class CreateParticipants < ActiveRecord::Migration
 
       t.timestamps
     end
+    add_index(:participants, [:event_id, :user_id], unique: true)
   end
 end

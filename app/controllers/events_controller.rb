@@ -4,6 +4,7 @@ class EventsController < ApplicationController
   def index
     @events = Event.includes(:leader_user).participatable.order(:event_at)
     @current_user_participants = current_user.participants.includes(:event).order('events.event_at')
+    @leader_events = Event.where(leader_user_id: current_user).participatable
   end
 
   def show

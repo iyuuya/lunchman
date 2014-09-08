@@ -48,6 +48,12 @@ describe 'event_show', type: :feature do
       it 'content has leader user' do
         expect(page).to have_content event.leader_user.name
       end
+
+      it 'within leader event list, content should has event name' do
+        within '#leader_event_list' do
+          expect(page).to have_content event.name
+        end
+      end
     end
   end
 
@@ -56,7 +62,9 @@ describe 'event_show', type: :feature do
 
     before do
       visit events_path
-      click_link event.name
+      within '#leader_event_list' do
+        click_link event.name
+      end
     end
 
     it 'content has layouts.event_show_top'do

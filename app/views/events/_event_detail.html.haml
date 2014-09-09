@@ -33,7 +33,7 @@
     .panel-heading
       = t('activerecord.attributes.event.comment')
     .panel-body
-      = event.comment
+      = simple_format(event.comment)
 
   .panel.panel-default
     .panel-heading

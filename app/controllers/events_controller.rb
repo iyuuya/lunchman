@@ -18,10 +18,11 @@ class EventsController < ApplicationController
   end
 
   def update
-    @event = current_user.event.find(params[:id])
-    if @event.update(event_params)
+    begin
+      @event = current_user.event.find(params[:id])
+      @event.update_event!(event_params)
       redirect_to @event, notice: I18n.t('layouts.notice.edit_event')
-    else
+    rescue
       render :edit
     end
   end

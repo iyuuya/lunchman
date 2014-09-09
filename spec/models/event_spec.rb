@@ -111,7 +111,7 @@ describe Event do
 
     context 'event max_participants is 4, and 3 users participated' do
       describe '#participate_count' do
-        subject { event.participate_count }
+        subject { event.participants.count }
         it { is_expected.to eq 3 }
       end
 

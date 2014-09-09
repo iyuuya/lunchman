@@ -48,11 +48,19 @@ class Event < ActiveRecord::Base
   end
 
   def participate_count_max?
-    participate_count >= self.max_participants
+    self.participants.count >= self.max_participants
   end
 
-  def participate_count
-    self.participants.count
+  def update_event!(params)
+    ActiveRecord::Base.transaction do
+      self.update!(params)
+
+      if self.participate_count_max?
+        self.update!(status: Event.statuses[:participants_max])
+      else
+        self.update!(status: Event.statuses[:normal])
+      end
+    end
   end
 
   private

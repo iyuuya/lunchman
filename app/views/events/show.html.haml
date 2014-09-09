@@ -17,7 +17,7 @@
       .col-xs-6
         = link_to t('layouts.event_delete'), event_path(@event), class: 'btn', method: :delete, data: { confirm: t('confirm.event_delete') }
 
-= render partial: 'participate_form', locals: { event: @event }
+= render partial: 'participate_form', locals: { event: @event, participant_for_form: @participant_for_form }
 
 .row
   .col-md-12

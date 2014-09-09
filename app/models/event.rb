@@ -43,33 +43,6 @@ class Event < ActiveRecord::Base
     self.participatable? && !participate_count_max?
   end
 
-  def participate!(user, comment)
-    params = {
-      event_id: self.id,
-      user_id: user,
-      comment: comment
-    }
-    participant = user.participants.build(params)
-    ActiveRecord::Base.transaction do
-      participant.save!
-
-      if self.participate_count_max?
-        self.update!(status: Event.statuses[:participants_max])
-      end
-    end
-  end
-
-  def cancel_participant!(user)
-    ActiveRecord::Base.transaction do
-      participant = user.participants.find_by!(event_id: self.id)
-      participant.destroy!
-
-      if self.participants_max? && !self.participate_count_max?
-        self.update!(status: Event.statuses[:normal])
-      end
-    end
-  end
-
   def participated?(user)
     user.participants.find_by(event_id: self.id).present?
   end

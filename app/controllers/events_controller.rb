@@ -10,6 +10,7 @@ class EventsController < ApplicationController
   def show
     @event = Event.find(params[:id])
     @participants = @event.participants.includes(:user).order(:created_at)
+    @participant_for_form = @event.participants.build(user_id: current_user)
   end
 
   def new
@@ -54,19 +55,21 @@ class EventsController < ApplicationController
 
   def participate
     begin
-      event = Event.find(params[:event_id])
-      event.participate!(current_user, event_params.fetch(:participant_comment))
+      @event = Event.find(params[:event_id])
+      @participant_for_form = current_user.participants.build(event_id: params[:event_id])
+      @participant_for_form.participate!(participant_params.fetch(:comment))
+
       flash[:notice] = I18n.t('layouts.notice.participate_event')
+      redirect_to event_path(params[:event_id])
     rescue
-      flash[:alert] = I18n.t('layouts.alert.participate_event_failure')
+      render :show
     end
-    redirect_to event_path(params[:event_id])
   end
 
   def cancel_participate
     begin
-      event = Event.find(params[:event_id])
-      event.cancel_participant!(current_user)
+      participant = current_user.participants.find_by!(event_id: params[:event_id])
+      participant.cancel_participant!
       flash[:notice] = I18n.t('layouts.notice.cancel_participate_event')
     rescue
       flash[:alert] = I18n.t('layouts.alert.cancel_participate_event_failure')
@@ -78,5 +81,9 @@ class EventsController < ApplicationController
 
   def event_params
     params.require(:event).permit(:name, :event_at_date, :event_at_time, :deadline_at_date, :deadline_at_time, :comment, :max_participants, :participant_comment)
+  end
+
+  def participant_params
+    params.require(:participant).permit(:comment)
   end
 end

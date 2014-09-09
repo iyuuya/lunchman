@@ -6,7 +6,7 @@
     %h5
       = link_to t('layouts.link_to_event_new_top'), new_event_path
 
-= render partial: 'participanting_events_list', locals: { current_user_participants: @current_user_participants, leader_events: @leader_events }
+= render partial: 'participanting_events_list', locals: { current_user_participant_events: @current_user_participant_events, leader_events: @leader_events }
 
 .panel
   .panel-body

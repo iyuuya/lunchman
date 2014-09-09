@@ -256,6 +256,34 @@ describe 'event_show', type: :feature do
             end
           end
         end
+
+        context 'giving canceled event'  do
+          let!(:canceled_event) { FactoryGirl.create(:event, status: Event.statuses[:cancel]) }
+          let!(:participant) { FactoryGirl.create(:participant_without_validation, event_id: canceled_event.id, user_id: current_user.id) }
+
+          before do
+            visit events_path
+          end
+          it 'should not content has participated (canceled) event name' do
+            within '#participating_event_list' do
+              expect(page).not_to have_content canceled_event.name
+            end
+          end
+        end
+
+        context 'giving past event'  do
+          let!(:past_event) { FactoryGirl.create(:event_without_validation, event_at: 3.days.ago) }
+          let!(:participant) { FactoryGirl.create(:participant_without_validation, event_id: past_event.id, user_id: current_user.id) }
+
+          before do
+            visit events_path
+          end
+          it 'should not content has participated (past) event name' do
+            within '#participating_event_list' do
+              expect(page).not_to have_content past_event.name
+            end
+          end
+        end
       end
     end
   end

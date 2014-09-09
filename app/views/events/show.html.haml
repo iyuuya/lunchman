@@ -7,6 +7,10 @@
       .col-xs-12
         %h4.text-danger
           = t('layouts.canceled_event')
+    - elsif @event.event_at.past?
+      .col-xs-12
+        %h4.text-danger
+          = t('layouts.past_event')
     - else
       .col-xs-6
         = link_to t('layouts.event_edit'), edit_event_path(@event), class: 'btn'

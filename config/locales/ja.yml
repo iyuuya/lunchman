@@ -57,6 +57,7 @@ ja:
     no_participants: 参加者はいません
     no_participating_event: 参加している募集はありません
     canceled_event: 募集を停止したイベントです
+    past_event: 終了したイベントです
     participant_unit: 人
 
     notice:

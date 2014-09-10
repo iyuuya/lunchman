@@ -4,7 +4,10 @@
       .panel.panel-default
         .panel-body
           - if event.participated?(current_user)
-            = link_to t('layouts.link_to_cancel_participate'), event_cancel_participate_path(event), method: :post, class: 'btn btn-default'
+            - if event.cancel?
+              = t('layouts.canceled_event')
+            - else
+              = link_to t('layouts.link_to_cancel_participate'), event_cancel_participate_path(event), method: :post, class: 'btn btn-default'
           - else
             - if event.can_participate?
               = form_for(participant_for_form, url: event_participate_path(event), method: :post, class: 'form-horizontal', role: 'form') do |f|

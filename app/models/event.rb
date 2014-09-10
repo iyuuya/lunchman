@@ -17,8 +17,12 @@ class Event < ActiveRecord::Base
 
   scope :participatable, -> {
     where(status: Event.statuses[:normal])
-    .where('event_at > :now', { now: Time.now })
-    .where('deadline_at is null OR deadline_at > :now', { now: Time.now })
+    .where('event_at > :now', { now: DateTime.now.in_time_zone })
+    .where('deadline_at is null OR deadline_at > :now', { now: DateTime.now.in_time_zone })
+  }
+
+  scope :not_held, -> {
+    where('event_at > :now', { now: DateTime.now.in_time_zone })
   }
 
   before_validation :format_event_at

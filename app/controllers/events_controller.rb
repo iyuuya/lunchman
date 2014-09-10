@@ -3,8 +3,8 @@ class EventsController < ApplicationController
 
   def index
     @events = Event.includes(:leader_user).participatable.order(:event_at)
-    @current_user_participant_events = current_user.participating_events.participatable.order('events.event_at')
-    @leader_events = Event.where(leader_user_id: current_user).participatable
+    @current_user_participant_events = current_user.participating_events.not_held.order('events.event_at')
+    @leader_events = Event.where(leader_user_id: current_user).not_held
   end
 
   def show

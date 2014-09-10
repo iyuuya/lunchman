@@ -15,6 +15,11 @@ ja:
       participant:
         comment: コメント
 
+  event_status:
+    normal: 参加ＯＫ
+    cancel: 募集停止中
+    participants_max: 参加者数MAX
+
   layouts:
     link_to_event_new_top: ランチ仲間を募集作成する
     link_to_event_list: 募集の一覧へ戻る

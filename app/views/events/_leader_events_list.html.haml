@@ -1,0 +1,14 @@
+- if leader_events.present?
+  .panel.panel-success
+    .panel-heading
+      = t('layouts.leader_event_list')
+    .panel-body
+      #leader_event_list.row
+        - leader_events.each do |event|
+          .col-md-2
+            = event.event_at.strftime(I18n.t('time.formats.middle'))
+          .col-md-10
+            = link_to event.name, event_path(event.id)
+            - unless event.normal?
+              %i.small
+                = status_html(event)

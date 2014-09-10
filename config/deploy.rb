@@ -3,7 +3,7 @@ lock '3.2.1'
 
 set :application, 'lunchman'
 set :repo_url, 'https://github.com/dnond/lunchman.git'
-set :branch, 'deploy'
+set :branch, 'master'
 set :rbenv_ruby, '2.1.2'
 
 set :deploy_to, '/var/www/app/lunchman'

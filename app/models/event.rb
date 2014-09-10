@@ -43,43 +43,24 @@ class Event < ActiveRecord::Base
     self.participatable? && !participate_count_max?
   end
 
-  def participate!(user, comment)
-    params = {
-      event_id: self.id,
-      user_id: user,
-      comment: comment
-    }
-    participant = user.participants.build(params)
-    ActiveRecord::Base.transaction do
-      participant.save!
-
-      if self.participate_count_max?
-        self.update!(status: Event.statuses[:participants_max])
-      end
-    end
-  end
-
-  def cancel_participant!(user)
-    ActiveRecord::Base.transaction do
-      participant = user.participants.find_by!(event_id: self.id)
-      participant.destroy!
-
-      if self.participants_max? && !self.participate_count_max?
-        self.update!(status: Event.statuses[:normal])
-      end
-    end
-  end
-
   def participated?(user)
     user.participants.find_by(event_id: self.id).present?
   end
 
   def participate_count_max?
-    participate_count >= self.max_participants
+    self.participants.count >= self.max_participants
   end
 
-  def participate_count
-    self.participants.count
+  def update_event!(params)
+    ActiveRecord::Base.transaction do
+      self.update!(params)
+
+      if self.participate_count_max?
+        self.update!(status: Event.statuses[:participants_max])
+      else
+        self.update!(status: Event.statuses[:normal])
+      end
+    end
   end
 
   private
@@ -102,6 +83,6 @@ class Event < ActiveRecord::Base
     return unless date_string.present? && time_string.present?
 
     date_string = date_string.gsub(/([0-9]+)年([0-9]+)月([0-9]+)日/, '\1/\2/\3')
-    Time.strptime('%s %s' % [date_string, time_string], '%Y/%m/%d %H:%M %p').in_time_zone.to_datetime
+    Time.strptime('%s %s' % [date_string, time_string], '%Y/%m/%d %H:%M').in_time_zone.to_datetime
   end
 end

@@ -80,18 +80,6 @@ describe Event do
     end
   end
 
-  describe '#participate!' do
-    let!(:event) { FactoryGirl.create(:event) }
-    it { expect { event.participate!(user, 'test') }.to change(Participant, :count).by(1) }
-  end
-
-  describe '#cancel_participant' do
-    let!(:event) { FactoryGirl.create(:event) }
-    let!(:participant) { FactoryGirl.create(:participant, event_id: event.id, user_id: user.id) }
-
-    it { expect { event.cancel_participant!(user) }.to change(Participant, :count).by(-1) }
-  end
-
   describe '#participated?' do
     let!(:event) { FactoryGirl.create(:event) }
     let!(:participant) { FactoryGirl.create(:participant, event_id: event.id, user_id: user.id) }
@@ -110,16 +98,20 @@ describe Event do
   describe 'user participate' do
     let!(:event) { FactoryGirl.create(:event, max_participants: 4) }
     let!(:users) { FactoryGirl.create_list(:user, 3) }
+    let!(:participant) { FactoryGirl.build(:participant, event_id: event.id) }
+    let!(:participants) { FactoryGirl.build_list(:participant, 3) }
 
     before do
-      users.each do |user|
-        event.participate!(user, 'test')
+      users.each_with_index do |user, i|
+        participants[i].user_id = user.id
+        participants[i].event_id = event.id
+        participants[i].participate!('test')
       end
     end
 
     context 'event max_participants is 4, and 3 users participated' do
       describe '#participate_count' do
-        subject { event.participate_count }
+        subject { event.participants.count }
         it { is_expected.to eq 3 }
       end
 
@@ -131,7 +123,8 @@ describe Event do
       context 'participating another user' do
         let!(:another_user) { FactoryGirl.create(:user) }
         before do
-          event.participate!(another_user, 'test')
+          participant.user = another_user
+          participant.participate!('test')
         end
 
         describe '#participate_count_max' do

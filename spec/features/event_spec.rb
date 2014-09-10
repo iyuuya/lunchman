@@ -48,6 +48,12 @@ describe 'event_show', type: :feature do
       it 'content has leader user' do
         expect(page).to have_content event.leader_user.name
       end
+
+      it 'within leader event list, content should has event name' do
+        within '#leader_event_list' do
+          expect(page).to have_content event.name
+        end
+      end
     end
   end
 
@@ -56,7 +62,9 @@ describe 'event_show', type: :feature do
 
     before do
       visit events_path
-      click_link event.name
+      within '#leader_event_list' do
+        click_link event.name
+      end
     end
 
     it 'content has layouts.event_show_top'do
@@ -220,6 +228,61 @@ describe 'event_show', type: :feature do
 
         it 'content should have layouts.cannot_participate' do
           expect(page).to have_content(I18n.t('layouts.cannot_participate'))
+        end
+      end
+
+      describe 'participated event list (in event index page)' do
+        let!(:event) { FactoryGirl.create(:event) }
+        let!(:participant) { FactoryGirl.create(:participant, event_id: event.id, user_id: current_user.id) }
+
+        context 'participating event, and visit event index' do
+          before do
+            visit events_path
+          end
+          it 'should content has participated event name' do
+            within '#participating_event_list' do
+              expect(page).to have_content event.name
+            end
+          end
+        end
+
+        context 'participating event, and visit event detail page' do
+          before do
+            visit event_path(event.id)
+          end
+          it 'should content has my name' do
+            within '#participants_list' do
+              expect(page).to have_content current_user.name
+            end
+          end
+        end
+
+        context 'giving canceled event'  do
+          let!(:canceled_event) { FactoryGirl.create(:event, status: Event.statuses[:cancel]) }
+          let!(:participant) { FactoryGirl.create(:participant_without_validation, event_id: canceled_event.id, user_id: current_user.id) }
+
+          before do
+            visit events_path
+          end
+          it 'should not content has participated (canceled) event name' do
+            within '#participating_event_list' do
+              expect(page).not_to have_content canceled_event.name
+            end
+          end
+        end
+
+        context 'giving past event'  do
+          let!(:past_event) { FactoryGirl.create(:event_without_validation, event_at: 3.days.ago) }
+          let!(:participant) { FactoryGirl.create(:participant_without_validation, event_id: past_event.id, user_id: current_user.id) }
+
+          before do
+            visit events_path
+          end
+          it 'should not content has participated (past) event name' do
+            within '#participating_event_list' do
+              expect(page).not_to have_content past_event.name
+            end
+          end
         end
       end
     end

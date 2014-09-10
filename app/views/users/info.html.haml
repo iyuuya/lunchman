@@ -1,4 +1,10 @@
-%p
-  = current_user.name
-%p
-  = current_user.email
+.panel.panel-success
+  .panel-heading
+    = t('layouts.user_info')
+  .panel-body
+    .col-md-12
+      = current_user.name
+    .col-md-12
+      = current_user.email
+
+= render 'layouts/footer'

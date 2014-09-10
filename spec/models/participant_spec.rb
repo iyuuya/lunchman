@@ -1,6 +1,19 @@
 require 'rails_helper'
 
 describe Participant do
+  let!(:event) { FactoryGirl.create(:event) }
+  let!(:user) { FactoryGirl.create(:user) }
+
+  describe '#participate!' do
+    let!(:participant) { FactoryGirl.build(:participant, event_id: event.id, user_id: user.id) }
+    it { expect { participant.participate!('test') }.to change(Participant, :count).by(1) }
+  end
+
+  describe '#cancel_participant' do
+    let!(:participant) { FactoryGirl.create(:participant, event_id: event.id, user_id: user.id) }
+    it { expect { participant.cancel_participant! }.to change(Participant, :count).by(-1) }
+  end
+
   describe 'Validator' do
     context 'when event status is cancel' do
       let!(:event) { FactoryGirl.create(:event, status: Event.statuses[:cancel]) }
@@ -12,7 +25,6 @@ describe Participant do
 
     context 'when participants is max' do
       let(:limited_max_participants_event) { FactoryGirl.create(:event, max_participants: 2) }
-
       let!(:users) { FactoryGirl.create_list(:user, 2) }
       let!(:user_new) { FactoryGirl.create(:user) }
       let!(:participant) { FactoryGirl.build(:participant, event_id: limited_max_participants_event.id, user_id: user_new.id) }
@@ -36,12 +48,12 @@ describe Participant do
     end
 
     describe 'event_id and user_id uniqueness' do
-      let!(:event) {  FactoryGirl.create(:event) }
+      let!(:event) { FactoryGirl.create(:event) }
       let!(:event_id) { event.id }
       let!(:participant) { FactoryGirl.build(:participant, event_id: event_id, user_id: user_id) }
       let!(:same_participant) { FactoryGirl.build(:participant, event_id: event_id, user_id: user_id) }
 
-      let!(:another_event) {  FactoryGirl.create(:event) }
+      let!(:another_event) { FactoryGirl.create(:event) }
       let!(:another_event_id) { another_event.id }
       let!(:another_participant) { FactoryGirl.build(:participant, event_id: another_event_id, user_id: user_id) }
 

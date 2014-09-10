@@ -5,3 +5,5 @@
   = error_messages_for(@event)
   = render partial: 'event_form', locals: { f: f }
   = f.submit t('layouts.event_new_label'), class: 'btn btn-default', data: { disable_with: t('layouts.event_new_making') }
+
+= render 'layouts/footer'

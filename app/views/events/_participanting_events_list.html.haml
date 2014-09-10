@@ -1,0 +1,27 @@
+.panel.panel-success
+  .panel-heading
+    = t('layouts.participating_event_list')
+  .panel-body
+    #participating_event_list
+      - if current_user_participant_events.present?
+        .row
+          - current_user_participant_events.each do |event|
+            .col-md-2
+              = event.event_at.strftime(I18n.t('time.formats.middle'))
+            .col-md-10
+              = link_to event.name, event_path(event.id)
+      - else
+        .text-danger
+          = t('layouts.no_participating_event')
+
+- if leader_events.present?
+  .panel.panel-success
+    .panel-heading
+      = t('layouts.leader_event_list')
+    .panel-body
+      #leader_event_list.row
+        - leader_events.each do |event|
+          .col-md-2
+            = event.event_at.strftime(I18n.t('time.formats.middle'))
+          .col-md-10
+            = link_to event.name, event_path(event.id)

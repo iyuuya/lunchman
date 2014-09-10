@@ -6,9 +6,12 @@
     %h5
       = link_to t('layouts.link_to_event_new_top'), new_event_path
 
+= render partial: 'participanting_events_list', locals: { current_user_participant_events: @current_user_participant_events, leader_events: @leader_events }
+
 .panel
   .panel-body
-    %h3= t('layouts.event_list_top')
+    %h3
+      = t('layouts.event_list_top')
     .list-group
       - @events.each do |event|
         .row.list-group-item
@@ -22,4 +25,5 @@
             %small
               by
               = event.leader_user.name
-
+.pull-right
+  = link_to I18n.t('layouts.link_logout'), logout_users_path, class: 'btn'

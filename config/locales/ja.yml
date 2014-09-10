@@ -145,6 +145,7 @@ ja:
       event_at_should_be_after_now: は現在時間よりも後に設定して下さい
       deadline_at_should_be_after_now: は現在時間よりも後に設定して下さい
       deadline_at_should_be_before_event_at: は%{event_at}よりも前に設定して下さい
+      max_participants_less_than_participants_count: を参加者数以上の値にして下さい
       unparticipatable_event: この募集は参加を受け付けていません
       max_participants_event: この募集は参加希望者がいっぱいです
 

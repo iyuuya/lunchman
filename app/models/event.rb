@@ -10,7 +10,7 @@ class Event < ActiveRecord::Base
   validates :leader_user_id, presence: true, numericality: true
   validates :max_participants, presence: true,  numericality: { greater_than: 1, less_than: 200 }
   validates :status, presence: true
-  validates_with Validators::EventDateValidator
+  validates_with Validators::EventDateValidator, Validators::EventParticipantsCountValidator
 
   belongs_to :leader_user, class_name: 'User'
   has_many :participants

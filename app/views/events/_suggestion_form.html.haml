@@ -1,0 +1,16 @@
+%a.pull-right{'href' => '#', 'data-target' => '#suggestion_modal', 'data-toggle' => 'modal'}
+  = t('layouts.suggestion_modal')
+#suggestion_modal.modal.fade{'aria-hidden' => 'true', 'aria-labelledby' => 'suggestion_modal_label', :role => 'dialog'}
+  .modal-dialog
+    .modal-content
+      = form_for(suggestion, url: suggest_path, method: :post, class: 'form-horizontal', role: 'form') do |f|
+        .modal-header.bg-success
+          %button.close{'data-dismiss' => 'modal', :type => 'button'}
+            %span{'aria-hidden' => 'true'} ×
+            %span.sr-only Close
+          %h5#suggestion_modal_label.modal-title
+            = t('layouts.suggestion_modal_title')
+        .modal-body
+          = f.text_field :comment, class: 'form-control input-small', placeholder: t('layouts.suggestion_placeholder')
+        .modal-footer
+          = f.submit t('layouts.suggestion_send'), class: 'btn btn-default', data: { disable_with: t('layouts.suggestion_sending') }

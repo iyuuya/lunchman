@@ -1,4 +1,4 @@
-ja:
+ ja:
   activerecord:
     models:
       event: ランチ募集
@@ -33,6 +33,7 @@ ja:
     event_show_top: ランチ仲間募集中！
     event_list_top: ランチ仲間募集中 一覧
     event_edit_top: 募集内容の変更
+    suggestion_list_top: ご意見一覧
     participants_list: 現在の参加者
     participating_event_list: 参加中のランチ募集
     leader_event_list: 主催しているランチ募集
@@ -49,6 +50,10 @@ ja:
     event_edit_label: 変更
     event_leader_name: 企画者名
     event_participating: 登録中…
+    suggestion_modal: 意見を送る
+    suggestion_modal_title: 意見を送る
+    suggestion_send: 送信
+    suggestion_sending: 送信中…
 
     event_status_participatable: 参加ＯＫ
     event_status_not_participatable: 参加不可
@@ -64,6 +69,7 @@ ja:
     canceled_event: 募集を停止したイベントです
     past_event: 終了したイベントです
     participant_unit: 人
+    suggestion_placeholder: ご意見下さい！
 
     notice:
       create_event: ランチ募集を開始しました
@@ -71,10 +77,12 @@ ja:
       cancel_event: 募集を取りやめました
       participate_event: この募集に参加しました
       cancel_participate_event: 参加を取り止めました
+      suggestion_create: ご意見ありがとうございます！
     alert:
       participate_event_failure: この募集への参加に失敗しました
       cancel_participate_event_failure: 参加の取り止めに失敗しました
       participate_event_stopped: このイベントの参加募集は終了しています
+      suggestion_create_failure: 意見の送信に失敗しました
 
   confirm:
     event_delete: 本当に削除しますか？

@@ -18,6 +18,9 @@ Rails.application.routes.draw do
     post "cancel_participate" => "events#cancel_participate", as: :cancel_participate
   end
 
+  post "suggest" => "events#suggest"
+  get "suggest_list" => "suggestions#show_list"
+
   get  '*not_found' => 'application#routing_error'
   post '*not_found' => 'application#routing_error'
 end

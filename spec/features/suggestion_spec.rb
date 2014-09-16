@@ -37,7 +37,7 @@ describe 'suggestion', js: true do
       context 'success send suggestion, and visiting suggestion list page' do
         before do
           click_button I18n.t('layouts.suggestion_send')
-          visit suggest_list_path
+          visit suggestions_path
         end
 
         it 'content should have sent suggestion' do

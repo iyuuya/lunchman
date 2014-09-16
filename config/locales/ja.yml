@@ -15,6 +15,11 @@ ja:
       participant:
         comment: コメント
 
+  event_status:
+    normal: 参加ＯＫ
+    cancel: 募集停止中
+    participants_max: 参加者数MAX
+
   layouts:
     link_to_event_new_top: ランチ仲間を募集作成する
     link_to_event_list: 募集の一覧へ戻る
@@ -140,6 +145,7 @@ ja:
       event_at_should_be_after_now: は現在時間よりも後に設定して下さい
       deadline_at_should_be_after_now: は現在時間よりも後に設定して下さい
       deadline_at_should_be_before_event_at: は%{event_at}よりも前に設定して下さい
+      max_participants_less_than_participants_count: を参加者数以上の値にして下さい
       unparticipatable_event: この募集は参加を受け付けていません
       max_participants_event: この募集は参加希望者がいっぱいです
 

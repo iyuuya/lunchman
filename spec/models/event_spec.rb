@@ -63,6 +63,23 @@ describe Event do
         is_expected.not_to include(*event_without_validation)
       end
     end
+
+    describe '#not_held' do
+      subject { Event.not_held }
+      context 'giving valid data' do
+        let!(:event) { FactoryGirl.create(:event) }
+        it 'should select created data' do
+          is_expected.to include(event)
+        end
+      end
+
+      context 'giving past event data' do
+        let!(:event) { FactoryGirl.create(:event_without_validation, event_at: 3.days.ago) }
+        it 'should not select created data' do
+          is_expected.not_to include(event)
+        end
+      end
+    end
   end
 
   describe '#leader?' do

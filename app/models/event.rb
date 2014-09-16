@@ -10,15 +10,19 @@ class Event < ActiveRecord::Base
   validates :leader_user_id, presence: true, numericality: true
   validates :max_participants, presence: true,  numericality: { greater_than: 1, less_than: 200 }
   validates :status, presence: true
-  validates_with Validators::EventDateValidator
+  validates_with Validators::EventDateValidator, Validators::EventParticipantsCountValidator
 
   belongs_to :leader_user, class_name: 'User'
   has_many :participants
 
   scope :participatable, -> {
     where(status: Event.statuses[:normal])
-    .where('event_at > :now', { now: Time.now })
-    .where('deadline_at is null OR deadline_at > :now', { now: Time.now })
+    .where('event_at > :now', { now: DateTime.now.in_time_zone })
+    .where('deadline_at is null OR deadline_at > :now', { now: DateTime.now.in_time_zone })
+  }
+
+  scope :not_held, -> {
+    where('event_at > :now', { now: DateTime.now.in_time_zone })
   }
 
   before_validation :format_event_at

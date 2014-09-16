@@ -264,9 +264,33 @@ describe 'event_show', type: :feature do
           before do
             visit events_path
           end
-          it 'should not content has participated (canceled) event name' do
+          it 'content should also has participated (canceled) event name' do
             within '#participating_event_list' do
-              expect(page).not_to have_content canceled_event.name
+              expect(page).to have_content canceled_event.name
+            end
+          end
+          it 'content should has event_status.cancel' do
+            within '#participating_event_list' do
+              expect(page).to have_content I18n.t('event_status.cancel')
+            end
+          end
+        end
+
+        context 'giving participants_max event' do
+          let!(:max_participants_event) { FactoryGirl.create(:event, status: Event.statuses[:participants_max]) }
+          let!(:participant) { FactoryGirl.create(:participant_without_validation, event_id: max_participants_event.id, user_id: current_user.id) }
+
+          before do
+            visit events_path
+          end
+          it 'content should also has participated (participants_max) event name' do
+            within '#participating_event_list' do
+              expect(page).to have_content max_participants_event.name
+            end
+          end
+          it 'content should also has event_status.participants_max' do
+            within '#participating_event_list' do
+              expect(page).to have_content I18n.t('event_status.participants_max')
             end
           end
         end
@@ -278,7 +302,7 @@ describe 'event_show', type: :feature do
           before do
             visit events_path
           end
-          it 'should not content has participated (past) event name' do
+          it 'content should not has participated (past) event name' do
             within '#participating_event_list' do
               expect(page).not_to have_content past_event.name
             end

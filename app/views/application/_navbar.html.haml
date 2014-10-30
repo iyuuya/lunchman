@@ -1,0 +1,23 @@
+#main-navbar.navbar.navbar-default.navbar-static-top(role='navigation')
+  .container
+    .navbar-header
+      = link_to 'Lunchman', root_path, class: 'navbar-brand'
+    .nav.navbar-right
+      - if user_signed_in?
+        %ul.nav.navbar-nav.navbar-right
+          %li.dropdown
+            %a.dropdown-toggle(data-toggle='dropdown')
+              = current_user.name
+              %span.caret
+            %ul.dropdown-menu(role='menu')
+              %li
+                %a(href=info_users_path)
+                  %span.glyphicon.glyphicon-user
+                  = t('layouts.user_info')
+              %li
+                %a(href=logout_users_path)
+                  %span.glyphicon.glyphicon-log-out
+                  = t('layouts.link_logout')
+      - else
+        = link_to t('layouts.link_login'), user_omniauth_authorize_path(:google_oauth2), class: 'btn btn-primary navbar-btn'
+

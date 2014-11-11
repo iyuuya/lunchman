@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   has_many :event, foreign_key: :leader_user_id
   has_many :participants
   has_many :participating_events, through: :participants, source: :event
+  has_many :suggestions
 
   def self.find_or_create_with_email( auth )
     email_from_auth = get_email_from_auth( auth )

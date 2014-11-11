@@ -1,0 +1,9 @@
+%h3
+  = t('layouts.suggestion_list_top')
+%table.table.table-striped
+  - @suggestions.each do |suggestion|
+    %tr
+      %td{'width' => '100'}
+        = suggestion.created_at.strftime(I18n.t('time.formats.middle'))
+      %td
+        = suggestion.comment

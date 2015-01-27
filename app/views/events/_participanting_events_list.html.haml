@@ -1,19 +1,15 @@
-.panel.panel-success
-  .panel-heading
-    = t('layouts.participating_event_list')
-  .panel-body
-    #participating_event_list
-      - if current_user_participant_events.present?
-        .row
-          - current_user_participant_events.each do |event|
-            .col-md-2
-              = event.event_at.strftime(I18n.t('time.formats.middle'))
-            .col-md-10
-              = link_to event.name, event_path(event.id)
-              - unless event.normal?
-                %i.small
-                  = status_html(event)
+#participating_event_list.panel.panel-info
+  .panel-heading= t('layouts.participating_event_list')
+  - if current_user_participant_events.present?
+    %table.table
+      - current_user_participant_events.each do |event|
+        %tr
+          %td= event.event_at.strftime(I18n.t('time.formats.middle'))
+          %td
+            = link_to event.name, event_path(event.id)
+            - unless event.normal?
+              %i.small= status_html(event)
 
-      - else
-        .text-danger
-          = t('layouts.no_participating_event')
+  - else
+    .panel-body
+      .text-danger= t('layouts.no_participating_event')

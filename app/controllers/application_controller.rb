@@ -20,6 +20,9 @@ class ApplicationController < ActionController::Base
   end
 
   def redirect_login_page_unless_logged_in
-    redirect_to login_users_path  unless user_signed_in?
+    unless user_signed_in?
+      session['before_logged_in_path'] = request.path
+      redirect_to login_users_path
+    end
   end
 end

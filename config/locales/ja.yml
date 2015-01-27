@@ -66,6 +66,7 @@
     cannot_participate: このイベントには参加出来ません
     no_participants: 参加者はいません
     no_participating_event: 参加している募集はありません
+    no_leading_event: 主催している募集はありません
     canceled_event: 募集を停止したイベントです
     past_event: 終了したイベントです
     participant_unit: 人
@@ -126,7 +127,8 @@
     - 土曜日
     formats:
       default: ! '%Y/%m/%d'
-      long: ! '%Y年%m月%d日'
+      long: ! "%Y年%m月%d日"
+      long_with_weekday: ! "%Y年%m月%d日(%a)"
       short: ! '%m/%d'
     month_names:
     -

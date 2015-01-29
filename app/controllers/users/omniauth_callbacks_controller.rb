@@ -1,6 +1,4 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
-  before_filter :redirect_info_page_if_logged_in
-
   def google_oauth2
     auth = request.env["omniauth.auth"]
     user = User.find_or_create_with_email( auth )
@@ -10,10 +8,6 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def after_sign_in_path_for(resource)
-    info_users_path
-  end
-
-  def redirect_info_page_if_logged_in
-    redirect_to info_users_path if user_signed_in?
+    session['before_logged_in_path'] || info_users_path
   end
 end

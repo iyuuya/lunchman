@@ -1,33 +1,28 @@
+.page-header
+  .row
+    .col-xs-8
+      %h1= t('layouts.event_index_top')
+    .col-xs-4
+      = render partial: 'suggestion_form', locals: { suggestion: @suggestion }
+
 .row
   .col-xs-8
-    %h1= t('layouts.event_index_top')
+    %h3= t('layouts.event_list_top')
+    - @events.group_by { |event| event.event_at.to_date }.each do |date, events|
+      .panel.panel-default
+        .panel-heading= I18n.l(date, format: :long_with_weekday)
+        %ul.list-group
+          - events.each do |event|
+            %li.list-group-item
+              .row
+                .col-xs-1
+                  %p= I18n.l(event.event_at, format: :short)
+                .col-xs-11
+                  %small= event.leader_user.name
+                  %h4= link_to event.name, event_path( event.id )
+
   .col-xs-4
-    = render partial: 'suggestion_form', locals: { suggestion: @suggestion }
+    %p.text-center= link_to t('layouts.link_to_event_new_top'), new_event_path, class: 'btn btn-info btn-lg btn-block'
+    = render partial: 'participanting_events_list', locals: { current_user_participant_events: @current_user_participant_events }
+    = render partial: 'leader_events_list', locals: { leader_events: @leader_events }
 
-.panel.panel-default
-  .panel-body
-    %h5
-      = link_to t('layouts.link_to_event_new_top'), new_event_path
-
-= render partial: 'participanting_events_list', locals: { current_user_participant_events: @current_user_participant_events }
-= render partial: 'leader_events_list', locals: { leader_events: @leader_events }
-
-.panel
-  .panel-body
-    %h3
-      = t('layouts.event_list_top')
-    .list-group
-      - @events.each do |event|
-        .row.list-group-item
-          .col-md-2
-            %h5
-              = event.event_at.strftime(I18n.t('time.formats.middle'))
-          .col-md-8
-            %h4
-              = link_to event.name, event_path( event.id )
-          .col-md-2
-            %small
-              by
-              = event.leader_user.name
-
-= link_to I18n.t('layouts.link_logout'), logout_users_path, class: 'btn'

@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
   root "events#index"
 
   devise_for :users, controllers: {
@@ -18,10 +20,9 @@ Rails.application.routes.draw do
     post "cancel_participate" => "events#cancel_participate", as: :cancel_participate
   end
 
-  resources :suggestions
+  resources :suggestions, only: :create
 
   post "suggest" => "events#suggest"
-  get "suggest_list" => "suggestions#show_list"
 
   get  '*not_found' => 'application#routing_error'
   post '*not_found' => 'application#routing_error'

@@ -1,10 +1,6 @@
 class SuggestionsController < ApplicationController
   before_filter :redirect_login_page_unless_logged_in
 
-  def index
-    @suggestions = Suggestion.all.order(created_at: :desc)
-  end
-
   def create
     suggestion = current_user.suggestions.build(suggestion_params)
 

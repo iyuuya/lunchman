@@ -33,17 +33,6 @@ describe 'suggestion', js: true do
           expect { click_button I18n.t('layouts.suggestion_send') }.to change(Suggestion, :count).by(1)
         end
       end
-
-      context 'success send suggestion, and visiting suggestion list page' do
-        before do
-          click_button I18n.t('layouts.suggestion_send')
-          visit suggestions_path
-        end
-
-        it 'content should have sent suggestion' do
-          expect(page).to have_content suggestion_comment
-        end
-      end
     end
   end
 end

@@ -22,6 +22,8 @@ gem 'bootstrap-sass'
 gem 'momentjs-rails', '>= 2.8.1'
 gem 'bootstrap3-datetimepicker-rails', '~> 3.1.1'
 
+gem 'activeadmin', github: 'activeadmin'
+
 group :production do
   gem 'mysql2'
 end

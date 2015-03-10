@@ -17,4 +17,4 @@
 //= require moment
 //= require moment/ja
 //= require bootstrap-datetimepicker
-//= require_tree .
+//= require_tree ./frontend

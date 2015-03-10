@@ -3,6 +3,7 @@
     models:
       event: ランチ募集
       user: ユーザー
+      participant: 参加者
     attributes:
       event:
         name: 企画名

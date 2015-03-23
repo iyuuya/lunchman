@@ -28,6 +28,14 @@ class Event < ActiveRecord::Base
   before_validation :format_event_at
   before_validation :format_deadline_at
 
+  auto_html_for :comment do
+    html_escape
+    image
+    youtube(:width => 400, :height => 250)
+    link :target => "_blank", :rel => "nofollow"
+    simple_format
+  end
+
   def participatable?
     normal? && event_at.future? && (deadline_at.blank? || deadline_at.future?)
   end

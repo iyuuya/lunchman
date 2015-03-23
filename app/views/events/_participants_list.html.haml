@@ -9,7 +9,7 @@
             = participant.user.name
           .col-xs-9
             - if participant.comment.present?
-              = participant.comment
+              = participant.comment_html
             - else
               &nbsp;
     - else

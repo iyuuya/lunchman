@@ -58,7 +58,8 @@ describe 'event_show', type: :feature do
   end
 
   describe 'visiting created event detail page' do
-    let!(:event) { FactoryGirl.create(:event, leader_user_id: current_user.id) }
+    let!(:event) { FactoryGirl.create(:event, leader_user_id: current_user.id, comment: comment) }
+    let(:comment) { Faker::Lorem.paragraphs(1).first }
 
     before do
       visit events_path
@@ -72,6 +73,11 @@ describe 'event_show', type: :feature do
     end
     it 'content has event name' do
       expect(page).to have_content event.name
+    end
+
+    context 'when url have in comment' do
+      let(:comment) { Faker::Internet.url('example.com', '/hoge.html') }
+      it { expect(page).to have_link(comment, href: comment) }
     end
   end
 
@@ -253,6 +259,7 @@ describe 'event_show', type: :feature do
           it 'should content has my name' do
             within '#participants_list' do
               expect(page).to have_content current_user.name
+              expect(page).to have_content participant.comment
             end
           end
         end

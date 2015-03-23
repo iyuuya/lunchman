@@ -8,6 +8,14 @@ class Participant < ActiveRecord::Base
   validates :event_id, uniqueness: { scope: :user_id }
   validates_with Validators::EventParticipateValidator
 
+  auto_html_for :comment do
+    html_escape
+    image
+    youtube(:width => 400, :height => 250)
+    link :target => "_blank", :rel => "nofollow"
+    simple_format
+  end
+
   def participate!(comment)
     self.comment = comment
     ActiveRecord::Base.transaction do

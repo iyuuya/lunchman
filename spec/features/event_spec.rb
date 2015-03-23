@@ -8,6 +8,21 @@ describe 'event_show', type: :feature do
     visit user_omniauth_authorize_path(provider: :google_oauth2)
   end
 
+  describe 'visiting event list page' do
+    let!(:participant_user) { FactoryGirl.create :user }
+    let!(:events) { FactoryGirl.create_list :event, 2, leader_user_id: current_user.id }
+    before do
+      FactoryGirl.create :participant, event_id: events.first.id, user_id: participant_user.id
+      visit events_path
+    end
+
+    it 'should display participant amounts' do
+      events.each do |event|
+        expect(page).to have_content "#{event.participants.count} / #{event.max_participants} #{I18n.t('layouts.participant_unit')}"
+      end
+    end
+  end
+
   describe 'creating new event', js: true do
     let!(:event) { FactoryGirl.build(:event, leader_user_id: current_user.id) }
 
@@ -318,4 +333,5 @@ describe 'event_show', type: :feature do
       end
     end
   end
+
 end

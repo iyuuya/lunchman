@@ -20,6 +20,13 @@
                 .col-xs-11
                   %small= event.leader_user.name
                   %h4= link_to event.name, event_path( event.id )
+              .row
+                .col-xs-12
+                  .pull-right.amount
+                    = event.participants.count
+                    \/
+                    = event.max_participants
+                    = I18n.t('layouts.participant_unit')
 
   .col-xs-4
     %p.text-center= link_to t('layouts.link_to_event_new_top'), new_event_path, class: 'btn btn-info btn-lg btn-block'

@@ -14,6 +14,8 @@
         participant_comment: 参加コメント
       participant:
         comment: コメント
+      event_message:
+        message: メッセージ
 
   event_status:
     normal: 参加ＯＫ
@@ -27,6 +29,7 @@
     link_to_cancel_participate: 参加を中止する
     link_logout: ログアウト
     link_login: ログインする
+    post_event_message: メッセージを投稿
 
     event_index_top: ランチ仲間募集！
     event_new_top: ランチ仲間募集
@@ -84,6 +87,7 @@
       cancel_participate_event_failure: 参加の取り止めに失敗しました
       participate_event_stopped: このイベントの参加募集は終了しています
       suggestion_create_failure: 意見の送信に失敗しました
+      post_message_failure: メッセージの登録に失敗しました
 
   confirm:
     event_delete: 本当に削除しますか？

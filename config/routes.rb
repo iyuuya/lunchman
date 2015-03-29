@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   resources :events do
     post "participate" => "events#participate", as: :participate
     post "cancel_participate" => "events#cancel_participate", as: :cancel_participate
+    post "post_message" => "events#post_message", as: :post_message
   end
 
   resources :suggestions

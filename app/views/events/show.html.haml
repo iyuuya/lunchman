@@ -26,4 +26,6 @@
     .row
       = render partial: 'event_detail', locals: { event: @event }
 
+= render partial: 'event_message', locals: { event: @event, event_message_for_form: @event_message_for_form, event_messages: @event_messages }
+
 = render 'layouts/footer'

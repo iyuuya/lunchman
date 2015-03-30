@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   has_many :participants
   has_many :participating_events, through: :participants, source: :event
   has_many :suggestions
+  has_many :event_messages
 
   def self.find_or_create_with_email( auth )
     email_from_auth = get_email_from_auth( auth )

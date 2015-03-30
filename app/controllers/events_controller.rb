@@ -12,6 +12,8 @@ class EventsController < ApplicationController
     @event = Event.find(params[:id])
     @participants = @event.participants.includes(:user).order(:created_at)
     @participant_for_form = @event.participants.build(user_id: current_user)
+    @event_message_for_form = @event.event_messages.build(event_id: @event)
+    @event_messages = @event.event_messages.includes(:user).order(created_at: :desc)
   end
 
   def new
@@ -79,6 +81,16 @@ class EventsController < ApplicationController
     redirect_to event_path(params[:event_id])
   end
 
+  def post_message
+    begin
+      @event = Event.find(params[:event_id])
+      @event.event_messages.create!(message: event_message_params.fetch(:message), user_id: current_user.id)
+    rescue
+      flash[:alert] = I18n.t('layouts.alert.post_message_failure')
+    end
+    redirect_to event_path(params[:event_id])
+  end
+
   private
 
   def event_params
@@ -87,5 +99,9 @@ class EventsController < ApplicationController
 
   def participant_params
     params.require(:participant).permit(:comment)
+  end
+
+  def event_message_params
+    params.require(:event_message).permit(:message)
   end
 end

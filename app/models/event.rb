@@ -14,6 +14,7 @@ class Event < ActiveRecord::Base
 
   belongs_to :leader_user, class_name: 'User'
   has_many :participants
+  has_many :event_messages
 
   scope :participatable, -> {
     where(status: Event.statuses[:normal])

@@ -1,0 +1,22 @@
+.row
+  .col-md-12
+    .panel.panel-default
+      .panel-body
+        = form_for(event_message_for_form, url: event_post_message_path(event), method: :post, class: 'form-horizontal', role: 'form') do |f|
+          = error_messages_for(event_message_for_form)
+          .form-group
+            = f.label :message
+            = f.text_field :message, name: 'event_message[message]', class: 'form-control'
+          = f.submit t('layouts.post_event_message'), class: 'btn btn-default', data: { disable_with: t('layouts.post_event_message') }
+
+      .panel-body
+        - if event_messages.present?
+          #participants_list.row
+            - event_messages.each do |event_message|
+              .col-xs-2
+                = event_message.created_at.strftime(I18n.t('time.formats.middle'))
+              .col-xs-2
+                = event_message.user.name
+              .col-xs-8
+                = event_message.message_html
+

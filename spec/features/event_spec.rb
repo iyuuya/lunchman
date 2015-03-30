@@ -334,4 +334,21 @@ describe 'event_show', type: :feature do
     end
   end
 
+  describe 'post_message' do
+    context 'post message to event' do
+      let(:message) { Faker::Lorem.paragraphs(1).first }
+      let(:event) { FactoryGirl.create(:event, leader_user_id: current_user.id) }
+
+      before do
+        visit event_path(event)
+        fill_in 'event_message[message]', with: message
+        click_button I18n.t('layouts.post_event_message')
+      end
+
+      subject { page }
+      it 'page should have message' do
+        is_expected.to have_content message
+      end
+    end
+  end 
 end

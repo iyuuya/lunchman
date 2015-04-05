@@ -17,9 +17,13 @@
               .row
                 .col-xs-1
                   %p= I18n.l(event.event_at, format: :short)
-                .col-xs-11
+                .col-xs-7
                   %small= event.leader_user.name
                   %h4= link_to event.name, event_path( event.id )
+                .col-xs-4
+                  - if event.event_at.past?
+                    .alert.alert-danger
+                      = I18n.t('layouts.past_event')
               .row
                 .col-xs-12
                   .pull-right.amount

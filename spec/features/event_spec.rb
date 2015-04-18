@@ -375,5 +375,35 @@ describe 'event_show', type: :feature do
         is_expected.to have_content message
       end
     end
-  end 
+  end
+
+  describe 'pagenation' do
+    let(:events_count) { 3 }
+    let!(:events) { FactoryGirl.create_list :event_without_validation, events_count, event_at: Date.yesterday.beginning_of_day}
+
+    subject { page }
+
+    context 'all events within 1 page' do
+      before do
+        visit events_path
+      end
+
+      it 'should not have paggination css' do
+        is_expected.not_to have_css 'ul.pagination'
+      end
+    end
+
+    context 'paginated' do
+      let(:events_per_page) { events_count - 1 }
+
+      before do
+        stub_const 'EventsController::EVENTS_PER_PAGE', events_per_page
+        visit events_path
+      end
+
+      it 'should have paggination css' do
+        is_expected.to have_css 'ul.pagination'
+      end
+    end
+  end
 end

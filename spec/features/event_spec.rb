@@ -267,13 +267,24 @@ describe 'event_show', type: :feature do
       end
 
       context 'giving canceled event, and visiting event detail page' do
-        let!(:event_canceled) { FactoryGirl.create(:event, status: Event.statuses[:cancel]) }
+        let(:event_canceled) { FactoryGirl.create(:event, status: Event.statuses[:cancel], leader_user_id: leader_user.id) }
         before do
           visit event_path(event_canceled)
         end
 
-        it 'content should have layouts.cannot_participate' do
-          expect(page).to have_content(I18n.t('layouts.cannot_participate'))
+        context 'leader is not current_user' do
+          let(:leader_user) { FactoryGirl.create :user }
+          it {
+            expect(page).to have_content(I18n.t('layouts.cannot_participate'))
+          }
+          
+        end
+
+        context 'leader is current_user' do
+          let(:leader_user) { current_user }
+          it {
+            expect(page).to have_content(I18n.t('layouts.canceled_event'))
+          }
         end
       end
 

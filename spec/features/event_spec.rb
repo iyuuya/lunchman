@@ -11,14 +11,39 @@ describe 'event_show', type: :feature do
   describe 'visiting event list page' do
     let!(:participant_user) { FactoryGirl.create :user }
     let!(:events) { FactoryGirl.create_list :event, 2, leader_user_id: current_user.id }
-    before do
-      FactoryGirl.create :participant, event_id: events.first.id, user_id: participant_user.id
-      visit events_path
+    let!(:participant) { FactoryGirl.create :participant, event_id: events.first.id, user_id: participant_user.id }
+
+    subject { page }
+
+    context 'When visit event index' do 
+      before do
+        visit events_path
+      end
+      
+      it 'should display participant amounts' do
+        events.each do |event|
+          is_expected.to have_content "#{event.participants.count} / #{event.max_participants} #{I18n.t('layouts.participant_unit')}"
+        end
+      end
+
+      it 'should not display warning abount past event' do
+        is_expected.not_to have_content I18n.t('layouts.past_event')
+      end
     end
 
-    it 'should display participant amounts' do
-      events.each do |event|
-        expect(page).to have_content "#{event.participants.count} / #{event.max_participants} #{I18n.t('layouts.participant_unit')}"
+    context 'When visit event index with past event' do
+      let!(:past_event) { FactoryGirl.create :event_without_validation, leader_user_id: current_user.id, event_at: DateTime.yesterday }
+      
+      before do
+        visit events_path
+      end
+
+      it 'should display past event name' do
+        is_expected.to have_content past_event.name
+      end
+
+      it 'should display warning abount past event' do
+        is_expected.to have_content I18n.t('layouts.past_event')
       end
     end
   end
@@ -225,8 +250,8 @@ describe 'event_show', type: :feature do
             visit events_path
           end
 
-          it 'content should not have event name' do
-            expect(page).not_to have_content event_limit_max_participants.name
+          it 'content should have event name' do
+            expect(page).to have_content event_limit_max_participants.name
           end
         end
 
@@ -242,13 +267,24 @@ describe 'event_show', type: :feature do
       end
 
       context 'giving canceled event, and visiting event detail page' do
-        let!(:event_canceled) { FactoryGirl.create(:event, status: Event.statuses[:cancel]) }
+        let(:event_canceled) { FactoryGirl.create(:event, status: Event.statuses[:cancel], leader_user_id: leader_user.id) }
         before do
           visit event_path(event_canceled)
         end
 
-        it 'content should have layouts.cannot_participate' do
-          expect(page).to have_content(I18n.t('layouts.cannot_participate'))
+        context 'leader is not current_user' do
+          let(:leader_user) { FactoryGirl.create :user }
+          it {
+            expect(page).to have_content(I18n.t('layouts.cannot_participate'))
+          }
+          
+        end
+
+        context 'leader is current_user' do
+          let(:leader_user) { current_user }
+          it {
+            expect(page).to have_content(I18n.t('layouts.canceled_event'))
+          }
         end
       end
 
@@ -350,5 +386,35 @@ describe 'event_show', type: :feature do
         is_expected.to have_content message
       end
     end
-  end 
+  end
+
+  describe 'pagenation' do
+    let(:events_count) { 3 }
+    let!(:events) { FactoryGirl.create_list :event_without_validation, events_count, event_at: Date.yesterday.beginning_of_day}
+
+    subject { page }
+
+    context 'all events within 1 page' do
+      before do
+        visit events_path
+      end
+
+      it 'should not have paggination css' do
+        is_expected.not_to have_css 'ul.pagination'
+      end
+    end
+
+    context 'paginated' do
+      let(:events_per_page) { events_count - 1 }
+
+      before do
+        stub_const 'EventsController::EVENTS_PER_PAGE', events_per_page
+        visit events_path
+      end
+
+      it 'should have paggination css' do
+        is_expected.to have_css 'ul.pagination'
+      end
+    end
+  end
 end

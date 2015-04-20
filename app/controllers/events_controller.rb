@@ -1,8 +1,10 @@
 class EventsController < ApplicationController
+  EVENTS_PER_PAGE = 10
+
   before_action :redirect_login_page_unless_logged_in
 
   def index
-    @events = Event.includes(:leader_user).participatable.order(:event_at)
+    @events = Event.includes(:leader_user).order(event_at: :desc).page(params[:page]).per(EVENTS_PER_PAGE)
     @current_user_participant_events = current_user.participating_events.not_held.order('events.event_at')
     @leader_events = Event.where(leader_user_id: current_user).not_held
     @suggestion = Suggestion.new

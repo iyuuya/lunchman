@@ -13,15 +13,15 @@
 
 ActiveRecord::Schema.define(version: 20150328050329) do
 
-  create_table "event_messages", force: true do |t|
+  create_table "event_messages", force: :cascade do |t|
     t.integer  "event_id",   null: false
-    t.text     "message"
+    t.text     "message",    null: false
     t.integer  "user_id",    null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "events", force: true do |t|
+  create_table "events", force: :cascade do |t|
     t.string   "name",             null: false
     t.integer  "leader_user_id",   null: false
     t.datetime "event_at",         null: false
@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 20150328050329) do
     t.datetime "updated_at"
   end
 
-  create_table "identities", force: true do |t|
+  create_table "identities", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "provider"
     t.string   "uid"
@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(version: 20150328050329) do
 
   add_index "identities", ["user_id"], name: "index_identities_on_user_id"
 
-  create_table "participants", force: true do |t|
+  create_table "participants", force: :cascade do |t|
     t.integer  "event_id",   null: false
     t.integer  "user_id",    null: false
     t.string   "comment"
@@ -55,14 +55,14 @@ ActiveRecord::Schema.define(version: 20150328050329) do
 
   add_index "participants", ["event_id", "user_id"], name: "index_participants_on_event_id_and_user_id", unique: true
 
-  create_table "suggestions", force: true do |t|
+  create_table "suggestions", force: :cascade do |t|
     t.string   "comment",    null: false
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "users", force: true do |t|
+  create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
